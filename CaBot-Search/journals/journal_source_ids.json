@@ -1,0 +1,2132 @@
+{
+  "matched": {
+    "CA-A CANCER JOURNAL FOR CLINICIANS": {
+      "source_ids": [
+        "https://openalex.org/S126094547"
+      ],
+      "matched_name": "CA A Cancer Journal for Clinicians",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "CA A CANCER JOURNAL FOR CLINICIANS",
+      "alternatives": []
+    },
+    "NATURE REVIEWS DRUG DISCOVERY": {
+      "source_ids": [
+        "https://openalex.org/S186543748"
+      ],
+      "matched_name": "Nature Reviews Drug Discovery",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "nature reviews drug discovery",
+      "alternatives": []
+    },
+    "LANCET": {
+      "source_ids": [
+        "https://openalex.org/S49861241"
+      ],
+      "matched_name": "The Lancet",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Lancet",
+      "alternatives": []
+    },
+    "NEW ENGLAND JOURNAL OF MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S62468778"
+      ],
+      "matched_name": "New England Journal of Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The NEW ENGLAND JOURNAL OF MEDICINE",
+      "alternatives": []
+    },
+    "BMJ-British Medical Journal": {
+      "source_ids": [
+        "https://openalex.org/S4393917726",
+        "https://openalex.org/S4394735789",
+        "https://openalex.org/S192814187",
+        "https://openalex.org/S4393911389"
+      ],
+      "matched_name": "BMJ",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "BMJ",
+      "alternatives": []
+    },
+    "Nature Reviews Clinical Oncology": {
+      "source_ids": [
+        "https://openalex.org/S41981144"
+      ],
+      "matched_name": "Nature Reviews Clinical Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "nature reviews clinical oncology",
+      "alternatives": []
+    },
+    "Nature Reviews Disease Primers": {
+      "source_ids": [
+        "https://openalex.org/S4210201506"
+      ],
+      "matched_name": "Nature Reviews Disease Primers",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NATURE REVIEWS DISEASE PRIMERS",
+      "alternatives": []
+    },
+    "MMWR Recommendations and Reports": {
+      "source_ids": [
+        "https://openalex.org/S4210169956"
+      ],
+      "matched_name": "MMWR Recommendations and Reports",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The MMWR Recommendations and Reports",
+      "alternatives": []
+    },
+    "JAMA-JOURNAL OF THE AMERICAN MEDICAL ASSOCIATION": {
+      "source_ids": [
+        "https://openalex.org/S172573765"
+      ],
+      "matched_name": "JAMA",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JAMA",
+      "alternatives": []
+    },
+    "World Psychiatry": {
+      "source_ids": [
+        "https://openalex.org/S183644930"
+      ],
+      "matched_name": "World Psychiatry",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The World Psychiatry",
+      "alternatives": []
+    },
+    "NATURE MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S203256638",
+        "https://openalex.org/S4210176248"
+      ],
+      "matched_name": "Nature Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The NATURE MEDICINE",
+      "alternatives": []
+    },
+    "ANNALS OF ONCOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S41454044"
+      ],
+      "matched_name": "Annals of Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The ANNALS OF ONCOLOGY",
+      "alternatives": []
+    },
+    "CANCER CELL": {
+      "source_ids": [
+        "https://openalex.org/S25671836"
+      ],
+      "matched_name": "Cancer Cell",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "cancer cell",
+      "alternatives": []
+    },
+    "LANCET NEUROLOGY": {
+      "source_ids": [
+        "https://openalex.org/S70053155"
+      ],
+      "matched_name": "The Lancet Neurology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "lancet neurology",
+      "alternatives": []
+    },
+    "Nature Reviews Gastroenterology & Hepatology": {
+      "source_ids": [
+        "https://openalex.org/S120397320"
+      ],
+      "matched_name": "Nature Reviews Gastroenterology & Hepatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Nature Reviews Gastroenterology & Hepatology",
+      "alternatives": []
+    },
+    "Lancet Diabetes & Endocrinology": {
+      "source_ids": [
+        "https://openalex.org/S2529869117"
+      ],
+      "matched_name": "The Lancet Diabetes & Endocrinology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Lancet Diabetes & Endocrinology",
+      "alternatives": []
+    },
+    "JOURNAL OF CLINICAL ONCOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S15137598"
+      ],
+      "matched_name": "Journal of Clinical Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of Clinical Oncology",
+      "alternatives": []
+    },
+    "Nature Reviews Cardiology": {
+      "source_ids": [
+        "https://openalex.org/S62674001"
+      ],
+      "matched_name": "Nature Reviews Cardiology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Nature Reviews Cardiology",
+      "alternatives": []
+    },
+    "LANCET ONCOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S116900674"
+      ],
+      "matched_name": "The Lancet Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The LANCET ONCOLOGY",
+      "alternatives": []
+    },
+    "NATURE REVIEWS GENETICS": {
+      "source_ids": [
+        "https://openalex.org/S8553189"
+      ],
+      "matched_name": "Nature Reviews Genetics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NATURE REVIEWS GENETICS",
+      "alternatives": []
+    },
+    "Lancet Respiratory Medicine": {
+      "source_ids": [
+        "https://openalex.org/S4210192742"
+      ],
+      "matched_name": "The Lancet Respiratory Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Lancet Respiratory Medicine",
+      "alternatives": []
+    },
+    "EUROPEAN HEART JOURNAL": {
+      "source_ids": [
+        "https://openalex.org/S181568219"
+      ],
+      "matched_name": "European Heart Journal",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The EUROPEAN HEART JOURNAL",
+      "alternatives": []
+    },
+    "MMWR Surveillance Summaries": {
+      "source_ids": [
+        "https://openalex.org/S4210189843"
+      ],
+      "matched_name": "MMWR Surveillance Summaries",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "mmwr surveillance summaries",
+      "alternatives": []
+    },
+    "LANCET INFECTIOUS DISEASES": {
+      "source_ids": [
+        "https://openalex.org/S23772524"
+      ],
+      "matched_name": "The Lancet Infectious Diseases",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Lancet Infectious Diseases",
+      "alternatives": []
+    },
+    "CIRCULATION": {
+      "source_ids": [
+        "https://openalex.org/S116251202"
+      ],
+      "matched_name": "Circulation",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The CIRCULATION",
+      "alternatives": []
+    },
+    "NATURE GENETICS": {
+      "source_ids": [
+        "https://openalex.org/S137905309"
+      ],
+      "matched_name": "Nature Genetics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "nature genetics",
+      "alternatives": []
+    },
+    "Nature Reviews Endocrinology": {
+      "source_ids": [
+        "https://openalex.org/S116269268"
+      ],
+      "matched_name": "Nature Reviews Endocrinology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Nature Reviews Endocrinology",
+      "alternatives": []
+    },
+    "Lancet Psychiatry": {
+      "source_ids": [
+        "https://openalex.org/S2531556786"
+      ],
+      "matched_name": "The Lancet Psychiatry",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "lancet psychiatry",
+      "alternatives": []
+    },
+    "Cancer Discovery": {
+      "source_ids": [
+        "https://openalex.org/S2486275289"
+      ],
+      "matched_name": "Cancer Discovery",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Cancer Discovery",
+      "alternatives": []
+    },
+    "Journal of Hematology & Oncology": {
+      "source_ids": [
+        "https://openalex.org/S46507181"
+      ],
+      "matched_name": "Journal of Hematology & Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal of Hematology & Oncology",
+      "alternatives": []
+    },
+    "INTENSIVE CARE MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S198804558"
+      ],
+      "matched_name": "Intensive Care Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Intensive Care Medicine",
+      "alternatives": []
+    },
+    "Nature Reviews Rheumatology": {
+      "source_ids": [
+        "https://openalex.org/S78310130"
+      ],
+      "matched_name": "Nature Reviews Rheumatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NATURE REVIEWS RHEUMATOLOGY",
+      "alternatives": []
+    },
+    "Nature Reviews Nephrology": {
+      "source_ids": [
+        "https://openalex.org/S18618073"
+      ],
+      "matched_name": "Nature Reviews Nephrology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Nature Reviews Nephrology",
+      "alternatives": []
+    },
+    "Annual Review of Pathology-Mechanisms of Disease": {
+      "source_ids": [
+        "https://openalex.org/S188288600"
+      ],
+      "matched_name": "Annual Review of Pathology Mechanisms of Disease",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Annual Review of Pathology Mechanisms of Disease",
+      "alternatives": []
+    },
+    "Nature Reviews Neurology": {
+      "source_ids": [
+        "https://openalex.org/S22232893"
+      ],
+      "matched_name": "Nature Reviews Neurology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Nature Reviews Neurology",
+      "alternatives": []
+    },
+    "NATURE IMMUNOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S41063453"
+      ],
+      "matched_name": "Nature Immunology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "nature immunology",
+      "alternatives": []
+    },
+    "Nature Biomedical Engineering": {
+      "source_ids": [
+        "https://openalex.org/S2764624792"
+      ],
+      "matched_name": "Nature Biomedical Engineering",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Nature Biomedical Engineering",
+      "alternatives": []
+    },
+    "Cell Metabolism": {
+      "source_ids": [
+        "https://openalex.org/S177533077"
+      ],
+      "matched_name": "Cell Metabolism",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Cell Metabolism",
+      "alternatives": []
+    },
+    "Molecular Cancer": {
+      "source_ids": [
+        "https://openalex.org/S132829192"
+      ],
+      "matched_name": "Molecular Cancer",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "molecular cancer",
+      "alternatives": []
+    },
+    "Annual Review of Immunology": {
+      "source_ids": [
+        "https://openalex.org/S109088427"
+      ],
+      "matched_name": "Annual Review of Immunology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ANNUAL REVIEW OF IMMUNOLOGY",
+      "alternatives": []
+    },
+    "JOURNAL OF HEPATOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S83651209"
+      ],
+      "matched_name": "Journal of Hepatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of Hepatology",
+      "alternatives": []
+    },
+    "Gastroenterology": {
+      "source_ids": [
+        "https://openalex.org/S4210180440"
+      ],
+      "matched_name": "GASTROENTEROLOGY",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "gastroenterology",
+      "alternatives": []
+    },
+    "Immunity": {
+      "source_ids": [
+        "https://openalex.org/S199671312"
+      ],
+      "matched_name": "Immunity",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Immunity",
+      "alternatives": []
+    },
+    "Lancet Public Health": {
+      "source_ids": [
+        "https://openalex.org/S2764808104"
+      ],
+      "matched_name": "The Lancet Public Health",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Lancet Public Health",
+      "alternatives": []
+    },
+    "EUROPEAN UROLOGY": {
+      "source_ids": [
+        "https://openalex.org/S96871409"
+      ],
+      "matched_name": "European Urology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The EUROPEAN UROLOGY",
+      "alternatives": []
+    },
+    "JAMA Pediatrics": {
+      "source_ids": [
+        "https://openalex.org/S14226812"
+      ],
+      "matched_name": "JAMA Pediatrics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JAMA PEDIATRICS",
+      "alternatives": []
+    },
+    "Lancet Planetary Health": {
+      "source_ids": [
+        "https://openalex.org/S2898182138"
+      ],
+      "matched_name": "The Lancet Planetary Health",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Lancet Planetary Health",
+      "alternatives": []
+    },
+    "Lancet Digital Health": {
+      "source_ids": [
+        "https://openalex.org/S4210237014"
+      ],
+      "matched_name": "The Lancet Digital Health",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "lancet digital health",
+      "alternatives": []
+    },
+    "Nature Cancer": {
+      "source_ids": [
+        "https://openalex.org/S4210236562"
+      ],
+      "matched_name": "Nature Cancer",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "nature cancer",
+      "alternatives": []
+    },
+    "GUT": {
+      "source_ids": [
+        "https://openalex.org/S3251770"
+      ],
+      "matched_name": "Gut",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "gut",
+      "alternatives": []
+    },
+    "JAMA Psychiatry": {
+      "source_ids": [
+        "https://openalex.org/S2495708506"
+      ],
+      "matched_name": "JAMA Psychiatry",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The JAMA Psychiatry",
+      "alternatives": []
+    },
+    "Nature Human Behaviour": {
+      "source_ids": [
+        "https://openalex.org/S2764866340"
+      ],
+      "matched_name": "Nature Human Behaviour",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NATURE HUMAN BEHAVIOUR",
+      "alternatives": []
+    },
+    "JAMA Oncology": {
+      "source_ids": [
+        "https://openalex.org/S2756165422"
+      ],
+      "matched_name": "JAMA Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JAMA ONCOLOGY",
+      "alternatives": []
+    },
+    "JAMA Internal Medicine": {
+      "source_ids": [
+        "https://openalex.org/S65364685"
+      ],
+      "matched_name": "JAMA Internal Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JAMA Internal Medicine",
+      "alternatives": []
+    },
+    "ENDOCRINE REVIEWS": {
+      "source_ids": [
+        "https://openalex.org/S13493133"
+      ],
+      "matched_name": "Endocrine Reviews",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ENDOCRINE REVIEWS",
+      "alternatives": []
+    },
+    "Cellular & Molecular Immunology": {
+      "source_ids": [
+        "https://openalex.org/S19143454"
+      ],
+      "matched_name": "Cellular and Molecular Immunology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "cellular & molecular immunology",
+      "alternatives": []
+    },
+    "JOURNAL OF THE AMERICAN COLLEGE OF CARDIOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S60865174"
+      ],
+      "matched_name": "Journal of the American College of Cardiology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of The American College Of Cardiology",
+      "alternatives": []
+    },
+    "Annual Review of Public Health": {
+      "source_ids": [
+        "https://openalex.org/S113591250"
+      ],
+      "matched_name": "Annual Review of Public Health",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Annual Review of Public Health",
+      "alternatives": []
+    },
+    "NATURE NEUROSCIENCE": {
+      "source_ids": [
+        "https://openalex.org/S2298632"
+      ],
+      "matched_name": "Nature Neuroscience",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NATURE NEUROSCIENCE",
+      "alternatives": []
+    },
+    "Journal of Thoracic Oncology": {
+      "source_ids": [
+        "https://openalex.org/S90745127"
+      ],
+      "matched_name": "Journal of Thoracic Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of Thoracic Oncology",
+      "alternatives": []
+    },
+    "BLOOD": {
+      "source_ids": [
+        "https://openalex.org/S200071133"
+      ],
+      "matched_name": "Blood",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The BLOOD",
+      "alternatives": []
+    },
+    "MMWR-MORBIDITY AND MORTALITY WEEKLY REPORT": {
+      "source_ids": [
+        "https://openalex.org/S183158886"
+      ],
+      "matched_name": "MMWR Morbidity and Mortality Weekly Report",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "MMWR MORBIDITY AND MORTALITY WEEKLY REPORT",
+      "alternatives": []
+    },
+    "JAMA Neurology": {
+      "source_ids": [
+        "https://openalex.org/S164389565"
+      ],
+      "matched_name": "JAMA Neurology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The JAMA Neurology",
+      "alternatives": []
+    },
+    "Lancet Microbe": {
+      "source_ids": [
+        "https://openalex.org/S4210190705"
+      ],
+      "matched_name": "The Lancet Microbe",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "lancet microbe",
+      "alternatives": []
+    },
+    "Cell Host & Microbe": {
+      "source_ids": [
+        "https://openalex.org/S207313999"
+      ],
+      "matched_name": "Cell Host & Microbe",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "cell host & microbe",
+      "alternatives": []
+    },
+    "ANNALS OF THE RHEUMATIC DISEASES": {
+      "source_ids": [
+        "https://openalex.org/S25650217"
+      ],
+      "matched_name": "Annals of the Rheumatic Diseases",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ANNALS OF THE RHEUMATIC DISEASES",
+      "alternatives": []
+    },
+    "Cancer Communications": {
+      "source_ids": [
+        "https://openalex.org/S2764377017",
+        "https://openalex.org/S4210240675"
+      ],
+      "matched_name": "Cancer Communications",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Cancer Communications",
+      "alternatives": []
+    },
+    "Lancet Global Health": {
+      "source_ids": [
+        "https://openalex.org/S4210176958"
+      ],
+      "matched_name": "The Lancet Global Health",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Lancet Global Health",
+      "alternatives": []
+    },
+    "Lancet Child & Adolescent Health": {
+      "source_ids": [
+        "https://openalex.org/S2898345135"
+      ],
+      "matched_name": "The Lancet Child & Adolescent Health",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "lancet child & adolescent health",
+      "alternatives": []
+    },
+    "ANNALS OF INTERNAL MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S119722071"
+      ],
+      "matched_name": "Annals of Internal Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ANNALS OF INTERNAL MEDICINE",
+      "alternatives": []
+    },
+    "Kidney International Supplements": {
+      "source_ids": [
+        "https://openalex.org/S4210177655"
+      ],
+      "matched_name": "Kidney International Supplements",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "kidney international supplements",
+      "alternatives": []
+    },
+    "AMERICAN JOURNAL OF RESPIRATORY AND CRITICAL CARE MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S93356601"
+      ],
+      "matched_name": "American Journal of Respiratory and Critical Care Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "American Journal Of Respiratory And Critical Care Medicine",
+      "alternatives": []
+    },
+    "PHARMACOLOGICAL REVIEWS": {
+      "source_ids": [
+        "https://openalex.org/S161680845"
+      ],
+      "matched_name": "Pharmacological Reviews",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "pharmacological reviews",
+      "alternatives": []
+    },
+    "Nature Metabolism": {
+      "source_ids": [
+        "https://openalex.org/S4210232714"
+      ],
+      "matched_name": "Nature Metabolism",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Nature Metabolism",
+      "alternatives": []
+    },
+    "PROGRESS IN RETINAL AND EYE RESEARCH": {
+      "source_ids": [
+        "https://openalex.org/S138587161"
+      ],
+      "matched_name": "Progress in Retinal and Eye Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The PROGRESS IN RETINAL AND EYE RESEARCH",
+      "alternatives": []
+    },
+    "Bioactive Materials": {
+      "source_ids": [
+        "https://openalex.org/S2898508902"
+      ],
+      "matched_name": "Bioactive Materials",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Bioactive Materials",
+      "alternatives": []
+    },
+    "Annual Review of Clinical Psychology": {
+      "source_ids": [
+        "https://openalex.org/S87014875"
+      ],
+      "matched_name": "Annual Review of Clinical Psychology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Annual Review of Clinical Psychology",
+      "alternatives": []
+    },
+    "Science Immunology": {
+      "source_ids": [
+        "https://openalex.org/S2764653179"
+      ],
+      "matched_name": "Science Immunology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "science immunology",
+      "alternatives": []
+    },
+    "PERIODONTOLOGY 2000": {
+      "source_ids": [
+        "https://openalex.org/S43912546"
+      ],
+      "matched_name": "Periodontology 2000",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "periodontology 2000",
+      "alternatives": []
+    },
+    "IEEE Reviews in Biomedical Engineering": {
+      "source_ids": [
+        "https://openalex.org/S203619773"
+      ],
+      "matched_name": "IEEE Reviews in Biomedical Engineering",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ieee reviews in biomedical engineering",
+      "alternatives": []
+    },
+    "AMERICAN JOURNAL OF BIOETHICS": {
+      "source_ids": [
+        "https://openalex.org/S41709181"
+      ],
+      "matched_name": "The American Journal of Bioethics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The AMERICAN JOURNAL OF BIOETHICS",
+      "alternatives": []
+    },
+    "EUROPEAN RESPIRATORY JOURNAL": {
+      "source_ids": [
+        "https://openalex.org/S4210207896",
+        "https://openalex.org/S198733495"
+      ],
+      "matched_name": "European Respiratory Journal",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The EUROPEAN RESPIRATORY JOURNAL",
+      "alternatives": []
+    },
+    "Nature Aging": {
+      "source_ids": [
+        "https://openalex.org/S4210214063"
+      ],
+      "matched_name": "Nature Aging",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NATURE AGING",
+      "alternatives": []
+    },
+    "EUROPEAN JOURNAL OF HEART FAILURE": {
+      "source_ids": [
+        "https://openalex.org/S87609158"
+      ],
+      "matched_name": "European Journal of Heart Failure",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "EUROPEAN JOURNAL OF HEART FAILURE",
+      "alternatives": []
+    },
+    "Military Medical Research": {
+      "source_ids": [
+        "https://openalex.org/S2739160569"
+      ],
+      "matched_name": "Military Medical Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Military Medical Research",
+      "alternatives": []
+    },
+    "TRENDS IN COGNITIVE SCIENCES": {
+      "source_ids": [
+        "https://openalex.org/S192051125"
+      ],
+      "matched_name": "Trends in Cognitive Sciences",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Trends In Cognitive Sciences",
+      "alternatives": []
+    },
+    "TRENDS IN ECOLOGY & EVOLUTION": {
+      "source_ids": [
+        "https://openalex.org/S79131028"
+      ],
+      "matched_name": "Trends in Ecology & Evolution",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The TRENDS IN ECOLOGY & EVOLUTION",
+      "alternatives": []
+    },
+    "BEHAVIORAL AND BRAIN SCIENCES": {
+      "source_ids": [
+        "https://openalex.org/S59628311"
+      ],
+      "matched_name": "Behavioral and Brain Sciences",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Behavioral And Brain Sciences",
+      "alternatives": []
+    },
+    "CIRCULATION RESEARCH": {
+      "source_ids": [
+        "https://openalex.org/S10652568"
+      ],
+      "matched_name": "Circulation Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "CIRCULATION RESEARCH",
+      "alternatives": []
+    },
+    "NEURO-ONCOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S106908163"
+      ],
+      "matched_name": "Neuro-Oncology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NEURO: ONCOLOGY",
+      "alternatives": []
+    },
+    "PSYCHOTHERAPY AND PSYCHOSOMATICS": {
+      "source_ids": [
+        "https://openalex.org/S184803288"
+      ],
+      "matched_name": "Psychotherapy and Psychosomatics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Psychotherapy And Psychosomatics",
+      "alternatives": []
+    },
+    "JOURNAL OF THE ROYAL SOCIETY OF MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S49645005"
+      ],
+      "matched_name": "Journal of the Royal Society of Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "journal of the royal society of medicine",
+      "alternatives": []
+    },
+    "JAMA Surgery": {
+      "source_ids": [
+        "https://openalex.org/S86924810"
+      ],
+      "matched_name": "JAMA Surgery",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The JAMA Surgery",
+      "alternatives": []
+    },
+    "Science Translational Medicine": {
+      "source_ids": [
+        "https://openalex.org/S24207032"
+      ],
+      "matched_name": "Science Translational Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Science Translational Medicine",
+      "alternatives": []
+    },
+    "DRUG RESISTANCE UPDATES": {
+      "source_ids": [
+        "https://openalex.org/S47159833"
+      ],
+      "matched_name": "Drug Resistance Updates",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Drug Resistance Updates",
+      "alternatives": []
+    },
+    "Lancet Haematology": {
+      "source_ids": [
+        "https://openalex.org/S2531671668"
+      ],
+      "matched_name": "The Lancet Haematology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Lancet Haematology",
+      "alternatives": []
+    },
+    "ADVANCED DRUG DELIVERY REVIEWS": {
+      "source_ids": [
+        "https://openalex.org/S114437232"
+      ],
+      "matched_name": "Advanced Drug Delivery Reviews",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The ADVANCED DRUG DELIVERY REVIEWS",
+      "alternatives": []
+    },
+    "AMERICAN JOURNAL OF PSYCHIATRY": {
+      "source_ids": [
+        "https://openalex.org/S116025658"
+      ],
+      "matched_name": "American Journal of Psychiatry",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "American Journal Of Psychiatry",
+      "alternatives": []
+    },
+    "Molecular Neurodegeneration": {
+      "source_ids": [
+        "https://openalex.org/S40861184"
+      ],
+      "matched_name": "Molecular Neurodegeneration",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "molecular neurodegeneration",
+      "alternatives": []
+    },
+    "Annual Review of Medicine": {
+      "source_ids": [
+        "https://openalex.org/S16909082"
+      ],
+      "matched_name": "Annual Review of Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Annual Review of Medicine",
+      "alternatives": []
+    },
+    "Lancet Rheumatology": {
+      "source_ids": [
+        "https://openalex.org/S4210233594"
+      ],
+      "matched_name": "The Lancet Rheumatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "LANCET RHEUMATOLOGY",
+      "alternatives": []
+    },
+    "KIDNEY INTERNATIONAL": {
+      "source_ids": [
+        "https://openalex.org/S97303050"
+      ],
+      "matched_name": "Kidney International",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Kidney International",
+      "alternatives": []
+    },
+    "DIABETES CARE": {
+      "source_ids": [
+        "https://openalex.org/S49878492"
+      ],
+      "matched_name": "Diabetes Care",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "diabetes care",
+      "alternatives": []
+    },
+    "HUMAN REPRODUCTION UPDATE": {
+      "source_ids": [
+        "https://openalex.org/S19450991"
+      ],
+      "matched_name": "Human Reproduction Update",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The HUMAN REPRODUCTION UPDATE",
+      "alternatives": []
+    },
+    "Acta Pharmaceutica Sinica B": {
+      "source_ids": [
+        "https://openalex.org/S2736993989"
+      ],
+      "matched_name": "Acta Pharmaceutica Sinica B",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "acta pharmaceutica sinica b",
+      "alternatives": []
+    },
+    "Journal of the National Comprehensive Cancer Network": {
+      "source_ids": [
+        "https://openalex.org/S935620192"
+      ],
+      "matched_name": "Journal of the National Comprehensive Cancer Network",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of The National Comprehensive Cancer Network",
+      "alternatives": []
+    },
+    "JAMA Cardiology": {
+      "source_ids": [
+        "https://openalex.org/S2765015654"
+      ],
+      "matched_name": "JAMA Cardiology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JAMA CARDIOLOGY",
+      "alternatives": []
+    },
+    "Neuron": {
+      "source_ids": [
+        "https://openalex.org/S45757444"
+      ],
+      "matched_name": "Neuron",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Neuron",
+      "alternatives": []
+    },
+    "TRENDS IN NEUROSCIENCES": {
+      "source_ids": [
+        "https://openalex.org/S114966740"
+      ],
+      "matched_name": "Trends in Neurosciences",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "trends in neurosciences",
+      "alternatives": []
+    },
+    "JOURNAL OF INFECTION": {
+      "source_ids": [
+        "https://openalex.org/S19579164"
+      ],
+      "matched_name": "Journal of Infection",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of Infection",
+      "alternatives": []
+    },
+    "Trends in Cancer": {
+      "source_ids": [
+        "https://openalex.org/S2765069123"
+      ],
+      "matched_name": "Trends in cancer",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "TRENDS IN CANCER",
+      "alternatives": []
+    },
+    "Clinical and Molecular Hepatology": {
+      "source_ids": [
+        "https://openalex.org/S2764482685"
+      ],
+      "matched_name": "Clinical and Molecular Hepatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "clinical and molecular hepatology",
+      "alternatives": []
+    },
+    "PROGRESS IN LIPID RESEARCH": {
+      "source_ids": [
+        "https://openalex.org/S108758393"
+      ],
+      "matched_name": "Progress in Lipid Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "progress in lipid research",
+      "alternatives": []
+    },
+    "TRENDS IN PHARMACOLOGICAL SCIENCES": {
+      "source_ids": [
+        "https://openalex.org/S31167473"
+      ],
+      "matched_name": "Trends in Pharmacological Sciences",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The TRENDS IN PHARMACOLOGICAL SCIENCES",
+      "alternatives": []
+    },
+    "CLINICAL PSYCHOLOGY REVIEW": {
+      "source_ids": [
+        "https://openalex.org/S4632444"
+      ],
+      "matched_name": "Clinical Psychology Review",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "clinical psychology review",
+      "alternatives": []
+    },
+    "TRENDS IN GENETICS": {
+      "source_ids": [
+        "https://openalex.org/S139283865"
+      ],
+      "matched_name": "Trends in Genetics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Trends In Genetics",
+      "alternatives": []
+    },
+    "Lancet Healthy Longevity": {
+      "source_ids": [
+        "https://openalex.org/S4210210722"
+      ],
+      "matched_name": "The Lancet Healthy Longevity",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "lancet healthy longevity",
+      "alternatives": []
+    },
+    "JOURNAL OF CLINICAL INVESTIGATION": {
+      "source_ids": [
+        "https://openalex.org/S114430552"
+      ],
+      "matched_name": "Journal of Clinical Investigation",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of Clinical Investigation",
+      "alternatives": []
+    },
+    "OPHTHALMOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S4210167658",
+        "https://openalex.org/S207341048"
+      ],
+      "matched_name": "Ophthalmology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ophthalmology",
+      "alternatives": []
+    },
+    "TRENDS IN IMMUNOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S84926904"
+      ],
+      "matched_name": "Trends in Immunology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "trends in immunology",
+      "alternatives": []
+    },
+    "HEPATOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S156174673"
+      ],
+      "matched_name": "Hepatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Hepatology",
+      "alternatives": []
+    },
+    "DRUGS": {
+      "source_ids": [
+        "https://openalex.org/S4436492"
+      ],
+      "matched_name": "Drugs",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The DRUGS",
+      "alternatives": []
+    },
+    "CANADIAN MEDICAL ASSOCIATION JOURNAL": {
+      "source_ids": [
+        "https://openalex.org/S4393911424",
+        "https://openalex.org/S4363604219"
+      ],
+      "matched_name": "Canadian Medical Association journal",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "canadian medical association journal",
+      "alternatives": []
+    },
+    "Blood Cancer Journal": {
+      "source_ids": [
+        "https://openalex.org/S2496263508"
+      ],
+      "matched_name": "Blood Cancer Journal",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "blood cancer journal",
+      "alternatives": []
+    },
+    "Med": {
+      "source_ids": [
+        "https://openalex.org/S4387290966"
+      ],
+      "matched_name": "Med-X",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "MED",
+      "alternatives": []
+    },
+    "JOURNAL OF THE AMERICAN ACADEMY OF DERMATOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S58727509"
+      ],
+      "matched_name": "Journal of the American Academy of Dermatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JOURNAL OF THE AMERICAN ACADEMY OF DERMATOLOGY",
+      "alternatives": []
+    },
+    "JOURNAL OF EXPERIMENTAL MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S22947807"
+      ],
+      "matched_name": "The Journal of Experimental Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "journal of experimental medicine",
+      "alternatives": []
+    },
+    "BIOMATERIALS": {
+      "source_ids": [
+        "https://openalex.org/S163807576"
+      ],
+      "matched_name": "Biomaterials",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The BIOMATERIALS",
+      "alternatives": []
+    },
+    "Lancet HIV": {
+      "source_ids": [
+        "https://openalex.org/S2531945440"
+      ],
+      "matched_name": "The Lancet HIV",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Lancet HIV",
+      "alternatives": []
+    },
+    "LEUKEMIA": {
+      "source_ids": [
+        "https://openalex.org/S149476849"
+      ],
+      "matched_name": "Leukemia",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The LEUKEMIA",
+      "alternatives": []
+    },
+    "TRENDS IN MOLECULAR MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S64855341"
+      ],
+      "matched_name": "Trends in Molecular Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "TRENDS IN MOLECULAR MEDICINE",
+      "alternatives": []
+    },
+    "Annual Review of Biomedical Engineering": {
+      "source_ids": [
+        "https://openalex.org/S171268996"
+      ],
+      "matched_name": "Annual Review of Biomedical Engineering",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "annual review of biomedical engineering",
+      "alternatives": []
+    },
+    "ALLERGY": {
+      "source_ids": [
+        "https://openalex.org/S68090385"
+      ],
+      "matched_name": "Allergy",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The ALLERGY",
+      "alternatives": []
+    },
+    "Annual Review of Nutrition": {
+      "source_ids": [
+        "https://openalex.org/S160110530"
+      ],
+      "matched_name": "Annual Review of Nutrition",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Annual Review Of Nutrition",
+      "alternatives": []
+    },
+    "International Journal of Surgery": {
+      "source_ids": [
+        "https://openalex.org/S67965910"
+      ],
+      "matched_name": "International Journal of Surgery",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "international journal of surgery",
+      "alternatives": []
+    },
+    "Analytic Methods in Accident Research": {
+      "source_ids": [
+        "https://openalex.org/S2898450762"
+      ],
+      "matched_name": "Analytic Methods in Accident Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ANALYTIC METHODS IN ACCIDENT RESEARCH",
+      "alternatives": []
+    },
+    "CANCER RESEARCH": {
+      "source_ids": [
+        "https://openalex.org/S168522863"
+      ],
+      "matched_name": "Cancer Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "cancer research",
+      "alternatives": []
+    },
+    "AGEING RESEARCH REVIEWS": {
+      "source_ids": [
+        "https://openalex.org/S117312820"
+      ],
+      "matched_name": "Ageing Research Reviews",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The AGEING RESEARCH REVIEWS",
+      "alternatives": []
+    },
+    "npj Digital Medicine": {
+      "source_ids": [
+        "https://openalex.org/S4210195431"
+      ],
+      "matched_name": "npj Digital Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Npj Digital Medicine",
+      "alternatives": []
+    },
+    "Theranostics": {
+      "source_ids": [
+        "https://openalex.org/S2482500137"
+      ],
+      "matched_name": "Theranostics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "theranostics",
+      "alternatives": []
+    },
+    "Gut Microbes": {
+      "source_ids": [
+        "https://openalex.org/S2764770702"
+      ],
+      "matched_name": "Gut Microbes",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "gut microbes",
+      "alternatives": []
+    },
+    "RADIOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S4210184851"
+      ],
+      "matched_name": "Radiology - Practice",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "RADIOLOGY",
+      "alternatives": []
+    },
+    "SEMINARS IN CANCER BIOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S154149207"
+      ],
+      "matched_name": "Seminars in Cancer Biology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "seminars in cancer biology",
+      "alternatives": []
+    },
+    "Nature Reviews Urology": {
+      "source_ids": [
+        "https://openalex.org/S67216020"
+      ],
+      "matched_name": "Nature Reviews Urology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "NATURE REVIEWS UROLOGY",
+      "alternatives": []
+    },
+    "MOLECULAR THERAPY": {
+      "source_ids": [
+        "https://openalex.org/S51596929"
+      ],
+      "matched_name": "Molecular Therapy",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "molecular therapy",
+      "alternatives": []
+    },
+    "Annual Review of Neuroscience": {
+      "source_ids": [
+        "https://openalex.org/S131371711"
+      ],
+      "matched_name": "Annual Review of Neuroscience",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "annual review of neuroscience",
+      "alternatives": []
+    },
+    "PHARMACOLOGY & THERAPEUTICS": {
+      "source_ids": [
+        "https://openalex.org/S83493678"
+      ],
+      "matched_name": "Pharmacology & Therapeutics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Pharmacology & Therapeutics",
+      "alternatives": []
+    },
+    "BRAIN": {
+      "source_ids": [
+        "https://openalex.org/S4210215073"
+      ],
+      "matched_name": "Brain-Computer Interfaces",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "brain",
+      "alternatives": []
+    },
+    "HemaSphere": {
+      "source_ids": [
+        "https://openalex.org/S4210211592"
+      ],
+      "matched_name": "HemaSphere",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "hemasphere",
+      "alternatives": []
+    },
+    "BRITISH JOURNAL OF SPORTS MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S136578784"
+      ],
+      "matched_name": "British Journal of Sports Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "British Journal Of Sports Medicine",
+      "alternatives": []
+    },
+    "Blood Cancer Discovery": {
+      "source_ids": [
+        "https://openalex.org/S4210239195"
+      ],
+      "matched_name": "Blood Cancer Discovery",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "blood cancer discovery",
+      "alternatives": []
+    },
+    "Cell Reports Medicine": {
+      "source_ids": [
+        "https://openalex.org/S4210207453"
+      ],
+      "matched_name": "Cell Reports Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "CELL REPORTS MEDICINE",
+      "alternatives": []
+    },
+    "Clinical Gastroenterology and Hepatology": {
+      "source_ids": [
+        "https://openalex.org/S6642600"
+      ],
+      "matched_name": "Clinical Gastroenterology and Hepatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Clinical Gastroenterology and Hepatology",
+      "alternatives": []
+    },
+    "Liver Cancer": {
+      "source_ids": [
+        "https://openalex.org/S2764970739"
+      ],
+      "matched_name": "Liver Cancer",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "LIVER CANCER",
+      "alternatives": []
+    },
+    "JAMA Dermatology": {
+      "source_ids": [
+        "https://openalex.org/S146641495"
+      ],
+      "matched_name": "JAMA Dermatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "jama dermatology",
+      "alternatives": []
+    },
+    "ENDOSCOPY": {
+      "source_ids": [
+        "https://openalex.org/S195182175"
+      ],
+      "matched_name": "Endoscopy",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Endoscopy",
+      "alternatives": []
+    },
+    "GENOMICS PROTEOMICS & BIOINFORMATICS": {
+      "source_ids": [
+        "https://openalex.org/S155547894"
+      ],
+      "matched_name": "Genomics Proteomics & Bioinformatics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "GENOMICS PROTEOMICS and BIOINFORMATICS",
+      "alternatives": []
+    },
+    "Arthritis & Rheumatology": {
+      "source_ids": [
+        "https://openalex.org/S4210186158"
+      ],
+      "matched_name": "Arthritis & Rheumatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "arthritis & rheumatology",
+      "alternatives": []
+    },
+    "JOURNAL OF ALLERGY AND CLINICAL IMMUNOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S108525051"
+      ],
+      "matched_name": "Journal of Allergy and Clinical Immunology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The JOURNAL OF ALLERGY AND CLINICAL IMMUNOLOGY",
+      "alternatives": []
+    },
+    "JOURNAL OF EXPERIMENTAL & CLINICAL CANCER RESEARCH": {
+      "source_ids": [
+        "https://openalex.org/S4393915158"
+      ],
+      "matched_name": "Journal of experimental & clinical cancer research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of Experimental & Clinical Cancer Research",
+      "alternatives": []
+    },
+    "TRENDS IN ENDOCRINOLOGY AND METABOLISM": {
+      "source_ids": [
+        "https://openalex.org/S93802863"
+      ],
+      "matched_name": "Trends in Endocrinology and Metabolism",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The TRENDS IN ENDOCRINOLOGY AND METABOLISM",
+      "alternatives": []
+    },
+    "ENDOCRINE PATHOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S53004546"
+      ],
+      "matched_name": "Endocrine Pathology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ENDOCRINE PATHOLOGY",
+      "alternatives": []
+    },
+    "Annual Review of Pharmacology and Toxicology": {
+      "source_ids": [
+        "https://openalex.org/S163849586"
+      ],
+      "matched_name": "The Annual Review of Pharmacology and Toxicology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ANNUAL REVIEW OF PHARMACOLOGY AND TOXICOLOGY",
+      "alternatives": []
+    },
+    "SLEEP MEDICINE REVIEWS": {
+      "source_ids": [
+        "https://openalex.org/S28482811"
+      ],
+      "matched_name": "Sleep Medicine Reviews",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "SLEEP MEDICINE REVIEWS",
+      "alternatives": []
+    },
+    "Cell Genomics": {
+      "source_ids": [
+        "https://openalex.org/S4210194377"
+      ],
+      "matched_name": "Cell Genomics",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "CELL GENOMICS",
+      "alternatives": []
+    },
+    "BRITISH JOURNAL OF DERMATOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S45720283"
+      ],
+      "matched_name": "British Journal of Dermatology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "British Journal Of Dermatology",
+      "alternatives": []
+    },
+    "MOLECULAR BIOLOGY AND EVOLUTION": {
+      "source_ids": [
+        "https://openalex.org/S57552105"
+      ],
+      "matched_name": "Molecular Biology and Evolution",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "molecular biology and evolution",
+      "alternatives": []
+    },
+    "CLINICAL MICROBIOLOGY AND INFECTION": {
+      "source_ids": [
+        "https://openalex.org/S71414007"
+      ],
+      "matched_name": "Clinical Microbiology and Infection",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "clinical microbiology and infection",
+      "alternatives": []
+    },
+    "METABOLISM-CLINICAL AND EXPERIMENTAL": {
+      "source_ids": [
+        "https://openalex.org/S119661813"
+      ],
+      "matched_name": "Metabolism",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "METABOLISM",
+      "alternatives": []
+    },
+    "MEDICINAL RESEARCH REVIEWS": {
+      "source_ids": [
+        "https://openalex.org/S22382660"
+      ],
+      "matched_name": "Medicinal Research Reviews",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "MEDICINAL RESEARCH REVIEWS",
+      "alternatives": []
+    },
+    "International Journal of Oral Science": {
+      "source_ids": [
+        "https://openalex.org/S44743489"
+      ],
+      "matched_name": "International Journal of Oral Science",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "INTERNATIONAL JOURNAL OF ORAL SCIENCE",
+      "alternatives": []
+    },
+    "Translational Neurodegeneration": {
+      "source_ids": [
+        "https://openalex.org/S2764798395"
+      ],
+      "matched_name": "Translational Neurodegeneration",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Translational Neurodegeneration",
+      "alternatives": []
+    },
+    "THORAX": {
+      "source_ids": [
+        "https://openalex.org/S106546978"
+      ],
+      "matched_name": "Thorax",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "thorax",
+      "alternatives": []
+    },
+    "MEDICAL IMAGE ANALYSIS": {
+      "source_ids": [
+        "https://openalex.org/S116571295"
+      ],
+      "matched_name": "Medical Image Analysis",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "medical image analysis",
+      "alternatives": []
+    },
+    "Asian Journal of Pharmaceutical Sciences": {
+      "source_ids": [
+        "https://openalex.org/S2764650913"
+      ],
+      "matched_name": "Asian Journal of Pharmaceutical Sciences",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "ASIAN JOURNAL OF PHARMACEUTICAL SCIENCES",
+      "alternatives": []
+    },
+    "MedComm": {
+      "source_ids": [
+        "https://openalex.org/S4210236862"
+      ],
+      "matched_name": "MedComm",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "MEDCOMM",
+      "alternatives": []
+    },
+    "JAMA Network Open": {
+      "source_ids": [
+        "https://openalex.org/S4210217848"
+      ],
+      "matched_name": "JAMA Network Open",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "jama network open",
+      "alternatives": []
+    },
+    "PLOS MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S197939330"
+      ],
+      "matched_name": "PLoS Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Plos Medicine",
+      "alternatives": []
+    },
+    "International Journal of Transgender Health": {
+      "source_ids": [
+        "https://openalex.org/S4210237279"
+      ],
+      "matched_name": "International Journal of Transgender Health",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "International Journal Of Transgender Health",
+      "alternatives": []
+    },
+    "JOURNAL OF CONTROLLED RELEASE": {
+      "source_ids": [
+        "https://openalex.org/S161954266"
+      ],
+      "matched_name": "Journal of Controlled Release",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JOURNAL OF CONTROLLED RELEASE",
+      "alternatives": []
+    },
+    "Cyborg and Bionic Systems": {
+      "source_ids": [
+        "https://openalex.org/S4210209220"
+      ],
+      "matched_name": "Cyborg and Bionic Systems",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "cyborg and bionic systems",
+      "alternatives": []
+    },
+    "Genome Medicine": {
+      "source_ids": [
+        "https://openalex.org/S149201819"
+      ],
+      "matched_name": "Genome Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Genome Medicine",
+      "alternatives": []
+    },
+    "CARDIOVASCULAR RESEARCH": {
+      "source_ids": [
+        "https://openalex.org/S91067379"
+      ],
+      "matched_name": "Cardiovascular Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Cardiovascular Research",
+      "alternatives": []
+    },
+    "CLINICAL CANCER RESEARCH": {
+      "source_ids": [
+        "https://openalex.org/S183149254"
+      ],
+      "matched_name": "Clinical Cancer Research",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The CLINICAL CANCER RESEARCH",
+      "alternatives": []
+    },
+    "Pulmonology": {
+      "source_ids": [
+        "https://openalex.org/S2898275119"
+      ],
+      "matched_name": "Pulmonology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Pulmonology",
+      "alternatives": []
+    },
+    "JOURNAL OF THE AMERICAN SOCIETY OF NEPHROLOGY": {
+      "source_ids": [
+        "https://openalex.org/S115693375"
+      ],
+      "matched_name": "Journal of the American Society of Nephrology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Journal Of The American Society Of Nephrology",
+      "alternatives": []
+    },
+    "JACC-Heart Failure": {
+      "source_ids": [
+        "https://openalex.org/S2764825379"
+      ],
+      "matched_name": "JACC Heart Failure",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JACC Heart Failure",
+      "alternatives": []
+    },
+    "Journal for ImmunoTherapy of Cancer": {
+      "source_ids": [
+        "https://openalex.org/S2754803477"
+      ],
+      "matched_name": "Journal for ImmunoTherapy of Cancer",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The Journal for ImmunoTherapy of Cancer",
+      "alternatives": []
+    },
+    "GENOME BIOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S81160022"
+      ],
+      "matched_name": "Genome biology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The GENOME BIOLOGY",
+      "alternatives": []
+    },
+    "ENVIRONMENTAL HEALTH PERSPECTIVES": {
+      "source_ids": [
+        "https://openalex.org/S10446503"
+      ],
+      "matched_name": "Environmental Health Perspectives",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The ENVIRONMENTAL HEALTH PERSPECTIVES",
+      "alternatives": []
+    },
+    "AMERICAN JOURNAL OF HEMATOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S199810014"
+      ],
+      "matched_name": "American Journal of Hematology",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "american journal of hematology",
+      "alternatives": []
+    },
+    "Eurosurveillance": {
+      "source_ids": [
+        "https://openalex.org/S50690046"
+      ],
+      "matched_name": "Eurosurveillance",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "eurosurveillance",
+      "alternatives": []
+    },
+    "JNCI-Journal of the National Cancer Institute": {
+      "source_ids": [
+        "https://openalex.org/S98010888"
+      ],
+      "matched_name": "JNCI Journal of the National Cancer Institute",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "JNCI Journal of the National Cancer Institute",
+      "alternatives": []
+    },
+    "Advanced Healthcare Materials": {
+      "source_ids": [
+        "https://openalex.org/S2500736452"
+      ],
+      "matched_name": "Advanced Healthcare Materials",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "Advanced Healthcare Materials",
+      "alternatives": []
+    },
+    "CLINICAL NUCLEAR MEDICINE": {
+      "source_ids": [
+        "https://openalex.org/S1118231"
+      ],
+      "matched_name": "Clinical Nuclear Medicine",
+      "similarity": 1.0,
+      "match_type": "exact",
+      "matched_variant": "The CLINICAL NUCLEAR MEDICINE",
+      "alternatives": []
+    },
+    "NATURE REVIEWS CANCER": {
+      "source_ids": [
+        "https://openalex.org/S160464432"
+      ],
+      "matched_name": "Nature reviews. Cancer",
+      "similarity": 0.8146077394485474,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "Nature Reviews Clinical Oncology",
+          0.7443411350250244
+        ],
+        [
+          "Annual Review of Cancer Biology",
+          0.697524905204773
+        ]
+      ]
+    },
+    "NATURE REVIEWS IMMUNOLOGY": {
+      "source_ids": [
+        "https://openalex.org/S93373720"
+      ],
+      "matched_name": "Nature reviews. Immunology",
+      "similarity": 0.8130291700363159,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "Immunological Reviews",
+          0.7645647525787354
+        ],
+        [
+          "Current Immunology Reviews",
+          0.7112325429916382
+        ]
+      ]
+    },
+    "Lancet Gastroenterology & Hepatology": {
+      "source_ids": [
+        "https://openalex.org/S2530914053"
+      ],
+      "matched_name": "The Lancet. Gastroenterology & hepatology",
+      "similarity": 0.8773810863494873,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "Academic Journal of Gastroenterology & Hepatology",
+          0.7857620120048523
+        ],
+        [
+          "Gastroenterology & Hepatology Letters",
+          0.7822693586349487
+        ]
+      ]
+    },
+    "NATURE REVIEWS NEUROSCIENCE": {
+      "source_ids": [
+        "https://openalex.org/S22232893"
+      ],
+      "matched_name": "Nature Reviews Neurology",
+      "similarity": 0.8435933589935303,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "Nature reviews. Neuroscience",
+          0.8311951160430908
+        ],
+        [
+          "Neuroscience Review Letters",
+          0.7407482862472534
+        ]
+      ]
+    },
+    "Lancet Regional Health-Europe": {
+      "source_ids": [
+        "https://openalex.org/S4210196034"
+      ],
+      "matched_name": "The Lancet Regional Health - Europe",
+      "similarity": 0.9343597292900085,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "The Lancet Regional Health - Southeast Asia",
+          0.8013052344322205
+        ],
+        [
+          "The Lancet Regional Health - Americas",
+          0.797187089920044
+        ]
+      ]
+    },
+    "JACC: CardioOncology": {
+      "source_ids": [
+        "https://openalex.org/S4210214127"
+      ],
+      "matched_name": "JACC CardioOncology",
+      "similarity": 0.9721845388412476,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "Cardio-Oncology",
+          0.7843067049980164
+        ],
+        [
+          "JACC Advances",
+          0.746209442615509
+        ]
+      ]
+    },
+    "Alzheimers & Dementia": {
+      "source_ids": [
+        "https://openalex.org/S4210197403"
+      ],
+      "matched_name": "Alzheimers Disease & Dementia",
+      "similarity": 0.9676223993301392,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "Alzheimer s & Dementia",
+          0.9167556762695312
+        ],
+        [
+          "Alzheimer s Dementia & Cognitive Neurology",
+          0.7851861119270325
+        ]
+      ]
+    },
+    "JACC-Cardiovascular Imaging": {
+      "source_ids": [
+        "https://openalex.org/S195556561"
+      ],
+      "matched_name": "JACC. Cardiovascular imaging",
+      "similarity": 0.9604017734527588,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "European Heart Journal - Cardiovascular Imaging",
+          0.7995399236679077
+        ],
+        [
+          "Journal of Cardiovascular Imaging",
+          0.794897198677063
+        ]
+      ]
+    },
+    "JACC-Cardiovascular Interventions": {
+      "source_ids": [
+        "https://openalex.org/S4210221114"
+      ],
+      "matched_name": "Clinical Cardiology and Cardiovascular Interventions",
+      "similarity": 0.7890547513961792,
+      "match_type": "embedding",
+      "alternatives": [
+        [
+          "Clinical Cardiology Interventions",
+          0.778232216835022
+        ],
+        [
+          "JACC CardioOncology",
+          0.7644575834274292
+        ]
+      ]
+    }
+  },
+  "unmatched": [],
+  "summary": {
+    "total_journals": 204,
+    "matched_count": 204,
+    "unmatched_count": 0,
+    "exact_matches": 195,
+    "embedding_matches": 9
+  }
+}

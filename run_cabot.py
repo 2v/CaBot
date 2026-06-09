@@ -1,0 +1,216 @@
+#!/usr/bin/env python3
+"""
+CaBot-Public command-line runner.
+
+Generates a text differential diagnosis and/or a video slideshow presentation for a single
+case presentation supplied as a plain-text file.
+
+Examples
+--------
+  # newest model, text + video (default)
+  python run_cabot.py --case examples/example_case.txt --output out/
+
+  # text only, original A/B-test model
+  python run_cabot.py --case examples/example_case.txt --output out/ --version v1 --mode text
+
+  # rare-disease (UDN) model, text only (its canonical mode)
+  python run_cabot.py --case examples/udn_example.txt --output out/ --version vr1 --mode text
+
+  # reproduce the Nov 2025 Brigham video-only run
+  python run_cabot.py --case examples/example_case.txt --output out/ \
+      --version v1.1 --mode video --base-model gpt-5
+
+See README.md for the full version / mode matrix and setup.
+"""
+import os
+import sys
+import json
+import argparse
+from pathlib import Path
+from datetime import datetime
+from configparser import ConfigParser
+
+from openai import OpenAI
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from cabot_public_lib.versions import get_version, VERSIONS, DEFAULT_VERSION
+from cabot_public_lib.cabot import CaBot, DEFAULT_CPC_INDEX, DEFAULT_NEJM_CPCS_PATH
+
+
+def parse_args():
+    p = argparse.ArgumentParser(
+        description="Run CaBot on a case presentation (text differential + video slideshow).",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    p.add_argument("--case", "-c", required=True, help="Path to a .txt file with the case presentation")
+    p.add_argument("--output", "-o", required=True, help="Output directory")
+    p.add_argument("--version", "-v", default=DEFAULT_VERSION, choices=list(VERSIONS),
+                   help="Model version")
+    p.add_argument("--mode", "-m", default="both", choices=["text", "video", "both"],
+                   help="What to generate")
+    p.add_argument("--base-model", default=None,
+                   help="Override the version's default base model (e.g. o3, gpt-5, gpt-5.4)")
+    p.add_argument("--exclude-id", default=None,
+                   help="Case ID or DOI to exclude from exemplar retrieval and literature citations "
+                        "(e.g. when running a known NEJM case). Searched against the case database.")
+    p.add_argument("--exclude-title", default=None,
+                   help="Case title to exclude; resolved to a case ID against the case database.")
+    p.add_argument("--config", default="config.ini", help="Path to config.ini with API keys")
+    p.add_argument("--cpc-index", default=DEFAULT_CPC_INDEX,
+                   help="Parquet index of the 100 public CPCs for exemplar retrieval (v1, v1.1)")
+    p.add_argument("--nejm-cpcs-path", default=DEFAULT_NEJM_CPCS_PATH,
+                   help="Dir with case images for video generation (mode video/both)")
+    p.add_argument("--debug", action="store_true", help="Verbose model I/O")
+    return p.parse_args()
+
+
+def load_keys(config_path):
+    cfg = ConfigParser()
+    if not os.path.exists(config_path):
+        sys.exit(f"Error: config file '{config_path}' not found. Copy config.example.ini to "
+                 f"config.ini and fill in your keys.")
+    cfg.read(config_path)
+    def get(*names):
+        for n in names:
+            if cfg.has_option("main", n):
+                return cfg.get("main", n)
+        return None
+    api_key = get("OPENAI_API_KEY", "OPENAI_KEY_TB", "OPENAI_KEY")
+    clinictron = get("JWT_CLINICTRON")
+    if not api_key:
+        sys.exit("Error: OPENAI_API_KEY missing from [main] in config.ini")
+    return api_key, clinictron
+
+
+def presentation_cfg_from_version(v):
+    """Translate a VersionConfig's presentation fields into the dict video.py expects."""
+    if v.presentation_style == "monolithic":
+        return {"style": "monolithic", "prompt": v.presentation_prompt}
+    return {
+        "style": "split",
+        "with_ddx_prefix": v.presentation_with_ddx_prefix,
+        "without_ddx_prefix": v.presentation_without_ddx_prefix,
+        "body": v.presentation_body,
+    }
+
+
+def main():
+    args = parse_args()
+    if not os.path.exists(args.case):
+        sys.exit(f"Error: case file '{args.case}' not found")
+
+    api_key, clinictron = load_keys(args.config)
+    v = get_version(args.version)
+    if v.mode == "simple_qa" and args.mode == "video":
+        sys.exit(f"Error: version '{v.name}' is a simple QA model and does not support video.")
+    case_text = Path(args.case).read_text().strip()
+    case_id = Path(args.case).stem
+    out_dir = Path(args.output) / case_id
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    client = OpenAI(api_key=api_key)
+
+    # ---- simple QA / literature-search line (vs1, vs1.1): text-only, no exemplars, no video ----
+    if v.mode == "simple_qa":
+        print(f"=== CaBot {v.name} ({v.line} line) — simple QA / literature search — commit {v.repo_commit} ===")
+        print(v.description)
+        if not clinictron:
+            print("Warning: JWT_CLINICTRON not set — literature search will fail.")
+        cabot = CaBot(
+            client=client, version_config=v, key_clinictron=clinictron,
+            cpc_index_path=args.cpc_index, nejm_cpcs_path=args.nejm_cpcs_path,
+        )
+        print("\nAnswering question (literature-grounded)...")
+        qa_result = cabot.run_simple_literature(
+            question=case_text, debug=args.debug, base_model=args.base_model,
+        )
+        answer_text = qa_result.get("output", "")
+        record = {
+            "id": case_id,
+            "version": v.name,
+            "repo_commit": v.repo_commit,
+            "base_model": args.base_model or v.base_model,
+            "mode": "simple_qa",
+            "question": case_text,
+            "cabot_prediction": qa_result,
+            "prediction_timestamp": datetime.now().isoformat(),
+        }
+        (out_dir / "answer.json").write_text(json.dumps(record, indent=2, ensure_ascii=False))
+        (out_dir / "answer.md").write_text(answer_text)
+        print(f"Saved answer -> {out_dir/'answer.json'}")
+        print("\nDone.")
+        return
+
+    print(f"=== CaBot {v.name} ({v.line} line) — mode={args.mode} — commit {v.repo_commit} ===")
+    print(v.description)
+
+    ddx_text = ""
+    ddx_result = None
+
+    # ---- text differential ----
+    if args.mode in ("text", "both"):
+        if v.use_similar_cases and not clinictron:
+            print("Warning: JWT_CLINICTRON not set — literature search will fail.")
+        cabot = CaBot(
+            client=client, version_config=v, key_clinictron=clinictron,
+            cpc_index_path=args.cpc_index, nejm_cpcs_path=args.nejm_cpcs_path,
+        )
+        print("\nGenerating differential diagnosis...")
+        ddx_result = cabot.run(
+            presentation_of_case=case_text,
+            images=[],
+            debug=args.debug,
+            base_model=args.base_model,
+            exclude_id=args.exclude_id,
+            exclude_title=args.exclude_title,
+        )
+        ddx_text = ddx_result.get("output", "")
+
+        record = {
+            "id": case_id,
+            "version": v.name,
+            "repo_commit": v.repo_commit,
+            "base_model": args.base_model or v.base_model,
+            "mode": args.mode,
+            "exclude_id": args.exclude_id,
+            "exclude_title": args.exclude_title,
+            "presentation_of_case": case_text,
+            "cabot_prediction": ddx_result,
+            "prediction_timestamp": datetime.now().isoformat(),
+        }
+        (out_dir / "differential_diagnosis.json").write_text(json.dumps(record, indent=2, ensure_ascii=False))
+        (out_dir / "differential_diagnosis.md").write_text(ddx_text)
+        print(f"Saved differential diagnosis -> {out_dir/'differential_diagnosis.json'}")
+
+    # ---- video slideshow ----
+    if args.mode in ("video", "both"):
+        from cabot_public_lib.video import generate_video_for_case
+        video_base_model = args.base_model or v.default_video_base_model
+        pres_cfg = presentation_cfg_from_version(v)
+        case = {
+            "id": case_id,
+            "presentation_of_case": case_text,
+            "presentation_of_case_references": [],  # CLI input is text-only; no figures
+        }
+        # video-only -> no DDx attached (WITHOUT_DDX presentation prefix)
+        base_ddx = ddx_text if args.mode == "both" else ""
+        print(f"\nGenerating video slideshow (model={video_base_model})...")
+        _, success, error_msg = generate_video_for_case(
+            case=case,
+            base_differential_diagnosis=base_ddx,
+            base_cpc_path=args.nejm_cpcs_path,
+            api_key=api_key,
+            output_base_dir=str(args.output),
+            base_model=video_base_model,
+            presentation_cfg=pres_cfg,
+        )
+        if success:
+            print(f"Saved video -> {Path(args.output)/case_id/(case_id + '_presentation.mp4')}")
+        else:
+            print(f"Video generation failed: {error_msg}")
+
+    print("\nDone.")
+
+
+if __name__ == "__main__":
+    main()

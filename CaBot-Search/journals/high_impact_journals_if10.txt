@@ -1,0 +1,204 @@
+1. CA-A CANCER JOURNAL FOR CLINICIANS
+2. NATURE REVIEWS DRUG DISCOVERY
+3. LANCET
+4. NEW ENGLAND JOURNAL OF MEDICINE
+5. BMJ-British Medical Journal
+6. Nature Reviews Clinical Oncology
+7. Nature Reviews Disease Primers
+8. MMWR Recommendations and Reports
+9. JAMA-JOURNAL OF THE AMERICAN MEDICAL ASSOCIATION
+10. World Psychiatry
+11. NATURE MEDICINE
+12. ANNALS OF ONCOLOGY
+13. CANCER CELL
+14. LANCET NEUROLOGY
+15. Nature Reviews Gastroenterology & Hepatology
+16. Lancet Diabetes & Endocrinology
+17. JOURNAL OF CLINICAL ONCOLOGY
+18. Nature Reviews Cardiology
+19. LANCET ONCOLOGY
+20. NATURE REVIEWS GENETICS
+21. Lancet Respiratory Medicine
+22. EUROPEAN HEART JOURNAL
+23. MMWR Surveillance Summaries
+24. LANCET INFECTIOUS DISEASES
+25. CIRCULATION
+26. NATURE GENETICS
+27. Nature Reviews Endocrinology
+28. Lancet Psychiatry
+29. Cancer Discovery
+30. Journal of Hematology & Oncology
+31. INTENSIVE CARE MEDICINE
+32. Nature Reviews Rheumatology
+33. Nature Reviews Nephrology
+34. Annual Review of Pathology-Mechanisms of Disease
+35. Nature Reviews Neurology
+36. NATURE IMMUNOLOGY
+37. Nature Biomedical Engineering
+38. Cell Metabolism
+39. Molecular Cancer
+40. Annual Review of Immunology
+41. JOURNAL OF HEPATOLOGY
+42. Gastroenterology
+43. Immunity
+44. Lancet Public Health
+45. EUROPEAN UROLOGY
+46. JAMA Pediatrics
+47. Lancet Planetary Health
+48. Lancet Digital Health
+49. Nature Cancer
+50. GUT
+51. JAMA Psychiatry
+52. Nature Human Behaviour
+53. JAMA Oncology
+54. JAMA Internal Medicine
+55. ENDOCRINE REVIEWS
+56. Cellular & Molecular Immunology
+57. JOURNAL OF THE AMERICAN COLLEGE OF CARDIOLOGY
+58. Annual Review of Public Health
+59. NATURE NEUROSCIENCE
+60. Journal of Thoracic Oncology
+61. BLOOD
+62. MMWR-MORBIDITY AND MORTALITY WEEKLY REPORT
+63. JAMA Neurology
+64. Lancet Microbe
+65. Cell Host & Microbe
+66. ANNALS OF THE RHEUMATIC DISEASES
+67. Cancer Communications
+68. Lancet Global Health
+69. Lancet Child & Adolescent Health
+70. ANNALS OF INTERNAL MEDICINE
+71. Kidney International Supplements
+72. AMERICAN JOURNAL OF RESPIRATORY AND CRITICAL CARE MEDICINE
+73. PHARMACOLOGICAL REVIEWS
+74. Nature Metabolism
+75. PROGRESS IN RETINAL AND EYE RESEARCH
+76. Bioactive Materials
+77. Annual Review of Clinical Psychology
+78. Science Immunology
+79. PERIODONTOLOGY 2000
+80. IEEE Reviews in Biomedical Engineering
+81. AMERICAN JOURNAL OF BIOETHICS
+82. EUROPEAN RESPIRATORY JOURNAL
+83. Nature Aging
+84. EUROPEAN JOURNAL OF HEART FAILURE
+85. Military Medical Research
+86. TRENDS IN COGNITIVE SCIENCES
+87. TRENDS IN ECOLOGY & EVOLUTION
+88. BEHAVIORAL AND BRAIN SCIENCES
+89. CIRCULATION RESEARCH
+90. NEURO-ONCOLOGY
+91. PSYCHOTHERAPY AND PSYCHOSOMATICS
+92. JOURNAL OF THE ROYAL SOCIETY OF MEDICINE
+93. JAMA Surgery
+94. Science Translational Medicine
+95. DRUG RESISTANCE UPDATES
+96. Lancet Haematology
+97. ADVANCED DRUG DELIVERY REVIEWS
+98. AMERICAN JOURNAL OF PSYCHIATRY
+99. Molecular Neurodegeneration
+100. Annual Review of Medicine
+101. Lancet Rheumatology
+102. KIDNEY INTERNATIONAL
+103. DIABETES CARE
+104. HUMAN REPRODUCTION UPDATE
+105. Acta Pharmaceutica Sinica B
+106. Journal of the National Comprehensive Cancer Network
+107. JAMA Cardiology
+108. Neuron
+109. TRENDS IN NEUROSCIENCES
+110. JOURNAL OF INFECTION
+111. Trends in Cancer
+112. Clinical and Molecular Hepatology
+113. PROGRESS IN LIPID RESEARCH
+114. TRENDS IN PHARMACOLOGICAL SCIENCES
+115. CLINICAL PSYCHOLOGY REVIEW
+116. TRENDS IN GENETICS
+117. Lancet Healthy Longevity
+118. JOURNAL OF CLINICAL INVESTIGATION
+119. OPHTHALMOLOGY
+120. TRENDS IN IMMUNOLOGY
+121. HEPATOLOGY
+122. DRUGS
+123. CANADIAN MEDICAL ASSOCIATION JOURNAL
+124. Blood Cancer Journal
+125. Med
+126. JOURNAL OF THE AMERICAN ACADEMY OF DERMATOLOGY
+127. JOURNAL OF EXPERIMENTAL MEDICINE
+128. BIOMATERIALS
+129. Lancet HIV
+130. LEUKEMIA
+131. TRENDS IN MOLECULAR MEDICINE
+132. Annual Review of Biomedical Engineering
+133. ALLERGY
+134. Annual Review of Nutrition
+135. International Journal of Surgery
+136. Analytic Methods in Accident Research
+137. CANCER RESEARCH
+138. AGEING RESEARCH REVIEWS
+139. npj Digital Medicine
+140. Theranostics
+141. Gut Microbes
+142. RADIOLOGY
+143. SEMINARS IN CANCER BIOLOGY
+144. Nature Reviews Urology
+145. MOLECULAR THERAPY
+146. Annual Review of Neuroscience
+147. PHARMACOLOGY & THERAPEUTICS
+148. BRAIN
+149. HemaSphere
+150. BRITISH JOURNAL OF SPORTS MEDICINE
+151. Blood Cancer Discovery
+152. Cell Reports Medicine
+153. Clinical Gastroenterology and Hepatology
+154. Liver Cancer
+155. JAMA Dermatology
+156. ENDOSCOPY
+157. GENOMICS PROTEOMICS & BIOINFORMATICS
+158. Arthritis & Rheumatology
+159. JOURNAL OF ALLERGY AND CLINICAL IMMUNOLOGY
+160. JOURNAL OF EXPERIMENTAL & CLINICAL CANCER RESEARCH
+161. TRENDS IN ENDOCRINOLOGY AND METABOLISM
+162. ENDOCRINE PATHOLOGY
+163. Annual Review of Pharmacology and Toxicology
+164. SLEEP MEDICINE REVIEWS
+165. Cell Genomics
+166. BRITISH JOURNAL OF DERMATOLOGY
+167. MOLECULAR BIOLOGY AND EVOLUTION
+168. CLINICAL MICROBIOLOGY AND INFECTION
+169. METABOLISM-CLINICAL AND EXPERIMENTAL
+170. MEDICINAL RESEARCH REVIEWS
+171. International Journal of Oral Science
+172. Translational Neurodegeneration
+173. THORAX
+174. MEDICAL IMAGE ANALYSIS
+175. Asian Journal of Pharmaceutical Sciences
+176. MedComm
+177. JAMA Network Open
+178. PLOS MEDICINE
+179. International Journal of Transgender Health
+180. JOURNAL OF CONTROLLED RELEASE
+181. Cyborg and Bionic Systems
+182. Genome Medicine
+183. CARDIOVASCULAR RESEARCH
+184. CLINICAL CANCER RESEARCH
+185. Pulmonology
+186. JOURNAL OF THE AMERICAN SOCIETY OF NEPHROLOGY
+187. JACC-Heart Failure
+188. Journal for ImmunoTherapy of Cancer
+189. GENOME BIOLOGY
+190. ENVIRONMENTAL HEALTH PERSPECTIVES
+191. AMERICAN JOURNAL OF HEMATOLOGY
+192. Eurosurveillance
+193. JNCI-Journal of the National Cancer Institute
+194. Advanced Healthcare Materials
+195. CLINICAL NUCLEAR MEDICINE
+196. NATURE REVIEWS CANCER
+197. NATURE REVIEWS IMMUNOLOGY
+198. Lancet Gastroenterology & Hepatology
+199. NATURE REVIEWS NEUROSCIENCE
+200. Lancet Regional Health-Europe
+201. JACC: CardioOncology
+202. Alzheimers & Dementia
+203. JACC-Cardiovascular Imaging
+204. JACC-Cardiovascular Interventions

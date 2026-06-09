@@ -1,0 +1,16 @@
+# Core (text differential diagnosis)
+openai>=1.40
+requests
+pillow
+
+# Exemplar CPC retrieval (v1, v1.1) — needs the downloadable parquet index
+chromadb
+pyarrow
+tqdm
+
+# Video slideshow generation (mode: video / both)
+# NOTE: also requires these SYSTEM binaries on PATH:
+#   - pdflatex (TeX Live / MacTeX, with the beamer class)
+#   - pdftoppm (poppler)
+#   - ffmpeg and ffprobe
+python-docx
