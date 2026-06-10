@@ -4,13 +4,12 @@ CaBot reads a clinical case presentation and produces (1) a written **differenti
 the style of the NEJM Clinicopathologic Conference and (2) an optional **video slideshow
 presentation** that teaches the clinical reasoning.
 
-This repository is the clean, public release used in the paper. A single `--version` flag selects
-the exact model generation, and `--mode` selects what to generate. CaBot grounds its reasoning in a
-**self-hosted literature search** over 3.47M articles from 204 high-impact clinical journals, served
-from a local **PostgreSQL + pgvector** database that runs the *same SQL and the same IVFFlat index as
-the production CaBot API* (the embeddings are published on HuggingFace,
-[`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)). Everything runs on
-your machine; no external search API is required.
+This repository is the source code for CaBot. A single `--version` flag selects the model
+generation, and `--mode` selects what to generate. Everything runs on your machine: a **self-hosted
+literature search** over 3.47M articles from 204 high-impact clinical journals (PostgreSQL +
+pgvector; embeddings published on HuggingFace,
+[`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)) and a
+**self-hosted case search** over 100 public NEJM CPC cases. No external search API is required.
 
 One difference from the study configuration: exemplar retrieval (`v1`/`v1.1`) draws on the **100
 NEJM CPC cases of the public CPC-Bench dataset** (a year-stratified sample over 2000–2025,
@@ -135,26 +134,6 @@ Outputs are written to `out/<case-name>/`:
 --debug             Verbose model I/O
 ```
 
-## Literature search
-
-The `literature_search` tool runs against a local **PostgreSQL + pgvector** database — the same engine
-the production CaBot `/api/search` endpoint uses. The index covers 3,474,244 works from 204 high-impact
-clinical journals (2023 JIF ≥ 10), built from an OpenAlex snapshot and embedded with
-`text-embedding-3-small` (1536-d). Documents are embedded with no prefix; queries are embedded as
-`"query: " + text`. Similarity is cosine via pgvector's `<=>` operator over an **IVFFlat** index
-(`vector_cosine_ops`, `lists = 1732`), with `ivfflat.probes = 42` set per session and
-`score = 1 − (embedding <=> query)` — identical schema, SQL, and parameters to production, so results
-reproduce the live site's behavior. (IVFFlat is approximate and its build is randomized, so a freshly
-loaded index is a different *instance* of the same method; the top-5 can occasionally differ from the
-original server's specific index.)
-
-The published index ([`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search))
-was built in **early June 2025** from an OpenAlex snapshot dated **~2025-06-05**. The database is
-loaded from it once with `tools/build_literature_index/04_load_postgres.py` (invoked by
-`fetch_data.py`); `05_search.py` is a standalone search/verification CLI (its `--json` mode reproduces
-the exact CaBot `/api/search` response). To rebuild the index from a fresh OpenAlex pull — to refresh
-it with newly published papers, or for exact reproducibility — see
-[Rebuilding the literature index from OpenAlex](#rebuilding-the-literature-index-from-openalex) below.
 
 ## Rebuilding the literature index from OpenAlex
 
