@@ -47,7 +47,7 @@ Usage:
     python 04_load_postgres.py                       # hosted index from HuggingFace
     python 04_load_postgres.py --local data/parquet  # shards you built yourself
     python 04_load_postgres.py --drop                # wipe + reload from scratch
-    python 04_load_postgres.py --max-rows 100000     # smoke test on a subset
+    python 04_load_postgres.py --max-rows 100000     # quick partial load
     python 04_load_postgres.py --skip-index          # rows only; index separately
 
 The full load is 3.47M rows. On the production machine (i9-9900K, 128 GB RAM)
@@ -281,7 +281,7 @@ def main():
     ap.add_argument("--drop", action="store_true",
                     help="Drop + recreate the tables before loading.")
     ap.add_argument("--max-rows", type=int, default=None,
-                    help="Load only this many rows (smoke test).")
+                    help="Load only this many rows.")
     ap.add_argument("--batch-size", type=int, default=10_000,
                     help="Rows per read/insert batch. Bounds peak memory: each batch is "
                          "materialized as Python objects + a text COPY buffer, so large "

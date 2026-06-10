@@ -123,7 +123,7 @@ so its behavior can be cross-checked. All prompts are written out in full in
 # CPC exemplars — every run below passes --exclude-id so the case is never retrieved as
 # its own exemplar and its source paper is never cited.
 
-# Quickest smoke test: newest model, text only, no exemplar data needed (vr1).
+# Quickest way to try it: newest model, text only, no exemplar data needed (vr1).
 # (Load a literature subset first for speed: fetch_data.py --skip-site --max-rows 200000)
 python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text --exclude-id NEJMcpc2412514
 
@@ -240,7 +240,7 @@ python tools/build_literature_index/04_load_postgres.py \
 python tools/build_literature_index/05_search.py --query "GLP-1 cardiovascular outcomes"
 ```
 
-For a fast end-to-end smoke test, add `--limit 100000` to step 2 and `--max-rows 100000` to step 5.
+To test the pipeline end to end quickly, add `--limit 100000` to step 2 and `--max-rows 100000` to step 5.
 Step 2 supports `--resume`; each script's `--help` / module docstring documents the rest (shard size,
 embedding batch size, index-build tuning). If you publish your own index, point CaBot at it by passing
 `--repo-id <your-username>/cabot-search` to `04_load_postgres.py` (and update the website download link).

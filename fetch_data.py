@@ -23,7 +23,7 @@ Usage:
     python fetch_data.py                         # both
     python fetch_data.py --skip-site             # literature DB only (vr1 / vs*)
     python fetch_data.py --skip-postgres         # exemplar index only
-    python fetch_data.py --max-rows 200000       # load a literature subset (smoke test)
+    python fetch_data.py --max-rows 200000       # load only a subset of the literature index
     python fetch_data.py --dsn "dbname=cabot_search host=localhost port=5432"
 """
 import argparse
@@ -50,7 +50,8 @@ def parse_args():
     p.add_argument("--dsn", default=None,
                    help="libpq DSN for the literature database (default: config.ini / env / local)")
     p.add_argument("--max-rows", type=int, default=None,
-                   help="Load only this many literature rows (smoke test)")
+                   help="Load only this many literature rows (faster; retrieval then "
+                        "searches just that subset)")
     p.add_argument("--skip-postgres", action="store_true", help="Skip the literature DB load")
     p.add_argument("--skip-site", action="store_true", help="Skip the CPC-Bench exemplar index")
     p.add_argument("--agree-terms", action="store_true",
