@@ -44,6 +44,9 @@ sudo -u postgres psql -d cabot_search -c "GRANT ALL ON SCHEMA public TO $USER;"
 #    (any read token from https://huggingface.co/settings/tokens):
 export HF_TOKEN=hf_...
 python fetch_data.py
+#    The full load is ~3.47M rows + an index build (budget ~1 hour). For quick
+#    testing, add --max-rows 200000 to load a subset (retrieval then searches
+#    just that subset; re-run without the flag later to load the rest).
 
 # 5. Run an example case through CaBot (v1.1 = newest main-line version). The example is
 #    NEJM Case 5-2025 (NEJMcpc2412514), one of the 100 public CPC exemplars — --exclude-id
@@ -52,33 +55,7 @@ python run_cabot.py --case examples/example_case.txt --output out/ --version v1.
     --exclude-id NEJMcpc2412514
 ```
 
-A single **`OPENAI_API_KEY`** in `config.ini` covers everything: the differential-diagnosis LLM, the
-literature-search query embeddings, and (for video) the slideshow LLM and text-to-speech.
 
-### Data
-
-`fetch_data.py` sets up both retrieval dependencies:
-
-- **Literature index → PostgreSQL + pgvector.** Downloads the index from HuggingFace
-  ([`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search), ~21 GB) and loads
-  it into your local database with the exact production schema and IVFFlat index (by running
-  `tools/build_literature_index/04_load_postgres.py`). Needed by every version. The full load is
-  ~3.47M rows plus an index build — **budget ~1 hour**; use `--max-rows 200000` for a quick subset.
-- **Exemplar index** (`cpc_presentation_index_100.parquet`, ~1.2 MB) from the CPC-Bench site, written
-  to `data/`. Needed only by `v1`/`v1.1` (exemplar retrieval). It is gated behind a free
-  registration, so `fetch_data.py` opens your browser once to approve the download — sign in, enter
-  the printed code, click Approve. Skip it with `--skip-site` if you only run `vr1`/`vs1`/`vs1.1`;
-  skip the database load with `--skip-postgres`. The case-presentation embeddings in this index are
-  the 100-case public CPC-Bench dataset, a year-stratified sample of NEJM CPC cases over 2000–2025.
-  This is **not** the same exemplar set used in the study — that set includes cases we cannot
-  redistribute, so the public index substitutes the releasable 100.
-
-> **Hardware.** The literature index lives on disk in Postgres (~30 GB including the IVFFlat index),
-> so you do **not** need to hold the vectors in RAM. The IVFFlat build is the heavy step; it benefits
-> from `maintenance_work_mem` and parallel workers (`04_load_postgres.py --maintenance-work-mem 16GB
-> --parallel-workers 8` on a large box — these affect build *speed* only, not search behavior). For a
-> quick run on a small machine, `fetch_data.py --max-rows 200000` loads a subset (retrieval is then
-> drawn from that subset only).
 
 ### System dependencies (only for `--mode video`/`both`)
 
