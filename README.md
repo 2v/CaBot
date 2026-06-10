@@ -15,14 +15,15 @@ Conference, along with an optional **video presentation** that narrates the reas
 
 This repository is the source code for CaBot. CaBot is an agentic system that equips a reasoning
 model (OpenAI o3 or GPT-5.4, selected with `--version`) with external tools: it retrieves two
-similar cases as exemplars of expert clinical reasoning, then iteratively searches the clinical
-literature to develop a differential diagnosis with citations (5 articles per query, ranked by
-semantic similarity). With `--mode video`/`both`, the differential becomes a complete slideshow —
-LLM-generated LaTeX Beamer slides paired with a slide-by-slide narration. Everything runs on your
-machine: a **self-hosted literature search** over 3.47M articles from 204 high-impact clinical
-journals (PostgreSQL + pgvector; embeddings published on HuggingFace,
+similar cases as exemplars of expert clinical reasoning, then iteratively searches 1,623,047
+clinical abstracts to develop a differential diagnosis with citations (5 articles per query, ranked
+by semantic similarity). With `--mode video`/`both`, CaBot generates a complete slideshow
+presentation. Everything runs on your machine: a **self-hosted literature search** (PostgreSQL +
+pgvector; embeddings published on HuggingFace,
 [`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)) and **self-hosted
-case retrieval** over 100 public NEJM CPC cases. No external search API is required.
+case retrieval** over 100 public NEJM CPC cases. The full literature index holds 3.47M articles
+from 204 high-impact clinical journals — the differential models search its 1.6M abstract-bearing
+subset, and the tool can search all 3.47M (see *Literature mode* under [Versions](#versions)).
 
 > **Note:** the study's full exemplar corpus of over 6,000 clinical cases cannot be redistributed,
 > so exemplar retrieval in this release searches the 100-case public
@@ -36,6 +37,7 @@ case retrieval** over 100 public NEJM CPC cases. No external search API is requi
 - [Usage](#usage)
 - [Rebuilding the literature index from OpenAlex](#rebuilding-the-literature-index-from-openalex)
 - [Layout](#layout)
+- [Citation](#citation)
 
 ## Quick Start
 
@@ -210,4 +212,21 @@ cabot_public_lib/
 run_cabot.py                  # CLI
 fetch_data.py                 # loads the literature index into Postgres + pulls the exemplar index
 tools/build_literature_index/ # rebuild the index from OpenAlex; 04 loads Postgres, 05 searches
+```
+
+## Citation
+
+**Teaching large language models to reason like expert diagnosticians**
+([arXiv:2509.12194](https://arxiv.org/abs/2509.12194))
+
+```bibtex
+@misc{buckley2026teachinglargelanguagemodels,
+      title={Teaching large language models to reason like expert diagnosticians},
+      author={Thomas A. Buckley and Riccardo Conci and Peter G. Brodeur and Jason Gusdorf and Sourik Beltrán and Bita Behrouzi and Byron Crowe and Jacob Dockterman and Muzzammil Muhammad and Sarah Ohnigian and Andrew Sanchez and James A. Diao and Aashna P. Shah and Daniel Restrepo and Eric S. Rosenberg and Andrew S. Lea and Emily Glanton and Kimberly LeBlanc and Undiagnosed Diseases Network and Marinka Zitnik and Scott H. Podolsky and Zahir Kanjee and Raja-Elie E. Abdulnour and Jacob M. Koshy and Adam Rodman and Arjun K. Manrai},
+      year={2026},
+      eprint={2509.12194},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2509.12194},
+}
 ```
