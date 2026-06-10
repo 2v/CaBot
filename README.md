@@ -24,18 +24,32 @@ pip install -r requirements.txt
 cp config.example.ini config.ini   # set OPENAI_API_KEY in [main]
 
 # 3. PostgreSQL + pgvector for the literature search (production: PostgreSQL 17.5,
-#    pgvector 0.8.0). On Ubuntu:
+#    pgvector 0.8.0). On Ubuntu/Debian, PostgreSQL 17 needs the official PGDG apt repo:
+sudo apt install postgresql-common
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
 sudo apt install postgresql-17 postgresql-17-pgvector
+#    Make sure the server is running before the next steps. On systems without
+#    systemd (e.g. Docker containers): sudo service postgresql start
 sudo -u postgres createdb cabot_search
 sudo -u postgres psql -d cabot_search -c "CREATE EXTENSION vector;"
+sudo -u postgres createuser -s $USER   # Postgres role matching your OS user (peer auth)
 sudo -u postgres psql -d cabot_search -c "GRANT ALL ON SCHEMA public TO $USER;"
 #    (set PG_DSN in config.ini if these defaults don't fit — see config.example.ini)
+#    The default DSN (host=localhost) connects over TCP, which asks for a password.
+#    If you hit "fe_sendauth: no password supplied", connect via the unix socket
+#    (peer auth, no password) instead:  export PG_DSN="dbname=cabot_search"
 
-# 4. Data — load the literature index into Postgres + pull the exemplar index
+# 4. Data — load the literature index into Postgres + pull the exemplar index.
+#    Optional: authenticate to HuggingFace for faster, non-rate-limited downloads
+#    (any read token from https://huggingface.co/settings/tokens):
+export HF_TOKEN=hf_...
 python fetch_data.py
 
-# 5. Run an example case through CaBot (vr1 = text only; no exemplar data or video deps)
-python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text
+# 5. Run an example case through CaBot (v1.1 = newest main-line version). The example is
+#    NEJM Case 5-2025 (NEJMcpc2412514), one of the 100 public CPC exemplars — --exclude-id
+#    keeps it out of its own exemplar retrieval and literature citations.
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text \
+    --exclude-id NEJMcpc2412514
 ```
 
 A single **`OPENAI_API_KEY`** in `config.ini` covers everything: the differential-diagnosis LLM, the
@@ -54,7 +68,10 @@ literature-search query embeddings, and (for video) the slideshow LLM and text-t
   to `data/`. Needed only by `v1`/`v1.1` (exemplar retrieval). It is gated behind a free
   registration, so `fetch_data.py` opens your browser once to approve the download — sign in, enter
   the printed code, click Approve. Skip it with `--skip-site` if you only run `vr1`/`vs1`/`vs1.1`;
-  skip the database load with `--skip-postgres`.
+  skip the database load with `--skip-postgres`. The case-presentation embeddings in this index are
+  the 100-case public CPC-Bench dataset, a year-stratified sample of NEJM CPC cases over 2000–2025.
+  This is **not** the same exemplar set used in the study — that set includes cases we cannot
+  redistribute, so the public index substitutes the releasable 100.
 
 > **Hardware.** The literature index lives on disk in Postgres (~30 GB including the IVFFlat index),
 > so you do **not** need to hold the vectors in RAM. The IVFFlat build is the heavy step; it benefits
@@ -102,24 +119,28 @@ so its behavior can be cross-checked. All prompts are written out in full in
 ## Usage
 
 ```bash
+# The bundled example case is NEJM Case 5-2025 (NEJMcpc2412514), one of the 100 public
+# CPC exemplars — every run below passes --exclude-id so the case is never retrieved as
+# its own exemplar and its source paper is never cited.
+
 # Quickest smoke test: newest model, text only, no exemplar data needed (vr1).
 # (Load a literature subset first for speed: fetch_data.py --skip-site --max-rows 200000)
-python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text
+python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text --exclude-id NEJMcpc2412514
 
 # Newest model, differential only (v1.1 needs the exemplar index from fetch_data.py)
-python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text --exclude-id NEJMcpc2412514
 
 # Newest model, full pipeline (differential + slideshow)
-python run_cabot.py --case examples/example_case.txt --output out/
+python run_cabot.py --case examples/example_case.txt --output out/ --exclude-id NEJMcpc2412514
 
 # Original A/B-test model, text only
-python run_cabot.py --case examples/example_case.txt --output out/ --version v1 --mode text
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1 --mode text --exclude-id NEJMcpc2412514
 
 # Simple QA / literature-search mode (the case file holds the question; o3, as benchmarked)
 python run_cabot.py --case examples/example_question.txt --output out/ --version vs1
 
 # Reproduce the Nov 2025 Brigham video-only demo
-python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode video --base-model gpt-5
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode video --base-model gpt-5 --exclude-id NEJMcpc2412514
 
 # Run a KNOWN NEJM case while excluding it from exemplar retrieval and literature citations
 python run_cabot.py --case case_4_2019.txt --output out/ --exclude-id NEJMcpc1810391
@@ -154,10 +175,12 @@ Outputs are written to `out/<case-name>/`:
 ## Exemplar data scope (v1 / v1.1)
 
 The public exemplar index, `data/cpc_presentation_index_100.parquet`, holds the **100 public CPCs**
+— the 100-case public CPC-Bench dataset, a year-stratified sample of NEJM CPC cases over 2000–2025 —
 together with their precomputed presentation-of-case embeddings (`text-embedding-3-small`, 1536-d),
 titles, and differential diagnoses. Exemplar retrieval therefore searches only these 100 cases —
-unlike the paper's full-corpus retrieval — so the retrieved exemplars (and any resulting citations to
-them) differ from the original runs. `vr1`, `vs1`, and `vs1.1` use no exemplar data at all.
+unlike the study's full-corpus retrieval, which includes cases we cannot redistribute — so the
+retrieved exemplars (and any resulting citations to them) differ from the original runs. `vr1`,
+`vs1`, and `vs1.1` use no exemplar data at all.
 
 ## Literature search
 

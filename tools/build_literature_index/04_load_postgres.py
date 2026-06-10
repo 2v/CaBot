@@ -282,6 +282,10 @@ def main():
                     help="Drop + recreate the tables before loading.")
     ap.add_argument("--max-rows", type=int, default=None,
                     help="Load only this many rows (smoke test).")
+    ap.add_argument("--batch-size", type=int, default=10_000,
+                    help="Rows per read/insert batch. Bounds peak memory: each batch is "
+                         "materialized as Python objects + a text COPY buffer, so large "
+                         "batches (parquet row-group sized) can OOM small machines.")
     ap.add_argument("--skip-index", action="store_true",
                     help="Load rows but skip index creation.")
     ap.add_argument("--maintenance-work-mem", default="2GB",
@@ -305,7 +309,8 @@ def main():
     log(f"Loading rows from {parquet_dir} ...")
     loaded = 0
     t0 = time.time()
-    for batch in dataset.to_batches(columns=META_COLS + ["embedding"]):
+    for batch in dataset.to_batches(columns=META_COLS + ["embedding"],
+                                    batch_size=args.batch_size):
         if args.max_rows and loaded + len(batch) > args.max_rows:
             batch = batch.slice(0, args.max_rows - loaded)
         meta_rows, vec_rows = batch_rows(batch)
