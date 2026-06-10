@@ -87,6 +87,12 @@ python fetch_data.py
 #    keeps it out of its own exemplar retrieval and literature citations.
 python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text \
     --exclude-id NEJMcpc2412514
+
+# 6. (Optional) Video generation — only needed for --mode video/both. Installs pdflatex with
+#    the beamer class, pdftoppm (poppler), and ffmpeg/ffprobe. On Ubuntu/Debian:
+sudo apt install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended \
+    poppler-utils ffmpeg
+#    (macOS: brew install --cask mactex-no-gui && brew install poppler ffmpeg)
 ```
 
 ## Versions
