@@ -12,6 +12,12 @@ the production CaBot API* (the embeddings are published on HuggingFace,
 [`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)). Everything runs on
 your machine; no external search API is required.
 
+One difference from the study configuration: exemplar retrieval (`v1`/`v1.1`) draws on the **100
+NEJM CPC cases of the public CPC-Bench dataset** (a year-stratified sample over 2000–2025,
+`data/cpc_presentation_index_100.parquet`) rather than the study's full case corpus, which includes
+cases we cannot redistribute — so retrieved exemplars, and any citations to them, can differ from
+the original runs.
+
 ## Setup
 
 ```bash
@@ -72,25 +78,6 @@ must be on your PATH.
 | `vs1`   | simple | o3      | literature only (no exemplars) | abstracts + titles | n/a (text only) | Simple QA / literature-search mode used for the NEJMBench QA & VQA benchmarks |
 | `vs1.1` | simple | gpt-5.4 | literature only (no exemplars) | abstracts + titles | n/a (text only) | Same as `vs1`, newer base model |
 
-**Literature mode** — *abstracts*: search only the abstract-bearing articles (~1.5M of the 3.47M
-index), top 5 returned with abstracts. *abstracts + titles*: dual retrieval over the full corpus —
-top-5 title-only results followed by top-5 with abstracts (the production API's `needAbstract`
-behavior; recorded per version as `lit_abstract_only` in `cabot_public_lib/versions.py`).
-
-The **simple line** (`vs1`, `vs1.1`) is not a differential generator: it answers a medical question
-grounded only in `literature_search` results (markdown footnote citations), with no CPC formatting and
-no exemplar retrieval — reproducing the configuration used for the QA & VQA benchmarks. It is text-only
-(`--mode video`/`both` are rejected). The case file you pass holds the question.
-
-Each version is pinned to the source commit it was derived from (see `cabot_public_lib/versions.py`),
-so its behavior can be cross-checked. All prompts are written out in full in
-`cabot_public_lib/cabot_prompts.py` and are meant to be edited directly.
-
-## Run modes (`--mode`)
-
-- `text`  — differential diagnosis only (no system video dependencies required)
-- `video` — slideshow only, generated from the case text (no differential attached)
-- `both`  — differential, then a slideshow built from it (**default**)
 
 ## Usage
 
@@ -147,16 +134,6 @@ Outputs are written to `out/<case-name>/`:
 --pg-dsn            libpq DSN for the pgvector literature DB (default: config.ini / env / local)
 --debug             Verbose model I/O
 ```
-
-## Exemplar data scope (v1 / v1.1)
-
-The public exemplar index, `data/cpc_presentation_index_100.parquet`, holds the **100 public CPCs**
-— the 100-case public CPC-Bench dataset, a year-stratified sample of NEJM CPC cases over 2000–2025 —
-together with their precomputed presentation-of-case embeddings (`text-embedding-3-small`, 1536-d),
-titles, and differential diagnoses. Exemplar retrieval therefore searches only these 100 cases —
-unlike the study's full-corpus retrieval, which includes cases we cannot redistribute — so the
-retrieved exemplars (and any resulting citations to them) differ from the original runs. `vr1`,
-`vs1`, and `vs1.1` use no exemplar data at all.
 
 ## Literature search
 
