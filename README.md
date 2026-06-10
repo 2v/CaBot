@@ -64,24 +64,23 @@ must be on your PATH.
 
 ## Versions
 
-| Version | Line | Base model | Grounding | Presentation | Notes |
-|---------|------|-----------|-----------|--------------|-------|
-| `v1`    | main | o3        | literature + exemplar CPC retrieval | standard | Model used in the physician A/B test |
-| `v1.1`  | main (**default**) | gpt-5.4 | literature + exemplar CPC retrieval | acknowledges missing information | Newest main-line model |
-| `vr1`   | rare | gpt-5.4   | literature only (no exemplars) | acknowledges missing information | Tuned for UDN rare-disease application letters; runs without local data |
-| `vs1`   | simple | o3      | literature only (no exemplars) | n/a (text only) | Simple QA / literature-search mode used for the NEJMBench QA & VQA benchmarks |
-| `vs1.1` | simple | gpt-5.4 | literature only (no exemplars) | n/a (text only) | Same as `vs1`, newer base model |
+| Version | Line | Base model | Grounding | Literature mode | Presentation | Notes |
+|---------|------|-----------|-----------|-----------------|--------------|-------|
+| `v1`    | main | o3        | literature + exemplar CPC retrieval | abstracts | standard | Model used in the physician A/B test |
+| `v1.1`  | main (**default**) | gpt-5.4 | literature + exemplar CPC retrieval | abstracts | acknowledges missing information | Newest main-line model |
+| `vr1`   | rare | gpt-5.4   | literature only (no exemplars) | abstracts | acknowledges missing information | Tuned for UDN rare-disease application letters; runs without local data |
+| `vs1`   | simple | o3      | literature only (no exemplars) | abstracts + titles | n/a (text only) | Simple QA / literature-search mode used for the NEJMBench QA & VQA benchmarks |
+| `vs1.1` | simple | gpt-5.4 | literature only (no exemplars) | abstracts + titles | n/a (text only) | Same as `vs1`, newer base model |
+
+**Literature mode** — *abstracts*: search only the abstract-bearing articles (~1.5M of the 3.47M
+index), top 5 returned with abstracts. *abstracts + titles*: dual retrieval over the full corpus —
+top-5 title-only results followed by top-5 with abstracts (the production API's `needAbstract`
+behavior; recorded per version as `lit_abstract_only` in `cabot_public_lib/versions.py`).
 
 The **simple line** (`vs1`, `vs1.1`) is not a differential generator: it answers a medical question
 grounded only in `literature_search` results (markdown footnote citations), with no CPC formatting and
 no exemplar retrieval — reproducing the configuration used for the QA & VQA benchmarks. It is text-only
 (`--mode video`/`both` are rejected). The case file you pass holds the question.
-
-**Literature-search scope by line.** The differential-diagnosis versions (`v1`, `v1.1`, `vr1`) search
-**only the abstract-bearing articles** (~1.5M of the 3.47M index) and return the top 5 papers with
-abstracts. The simple line (`vs1`, `vs1.1`) searches the full corpus with dual retrieval — top-5
-title-only results followed by top-5 with abstracts. This matches the production API's `needAbstract`
-behavior and is recorded per version as `lit_abstract_only` in `cabot_public_lib/versions.py`.
 
 Each version is pinned to the source commit it was derived from (see `cabot_public_lib/versions.py`),
 so its behavior can be cross-checked. All prompts are written out in full in
