@@ -21,8 +21,11 @@ def main():
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--site", default=DEFAULT_SITE, help="CPC-Bench site base URL")
     ap.add_argument("--data-dir", default="data", help="Where to write the exemplar parquet")
+    ap.add_argument("--agree-terms", action="store_true",
+                    help="Affirm that you have read and agree to the CPC-Bench Terms of Use "
+                         "(skips the interactive prompt)")
     args = ap.parse_args()
-    fetch_site(args.site, args.data_dir)
+    fetch_site(args.site, args.data_dir, agree_terms=args.agree_terms)
     print("\nfetch_site OK.")
 
 

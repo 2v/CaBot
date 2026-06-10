@@ -53,7 +53,31 @@ def parse_args():
                    help="Load only this many literature rows (smoke test)")
     p.add_argument("--skip-postgres", action="store_true", help="Skip the literature DB load")
     p.add_argument("--skip-site", action="store_true", help="Skip the CPC-Bench exemplar index")
+    p.add_argument("--agree-terms", action="store_true",
+                   help="Affirm that you have read and agree to the CPC-Bench Terms of Use "
+                        "(skips the interactive prompt; for non-interactive runs)")
     return p.parse_args()
+
+
+def confirm_terms(site, agreed_via_flag):
+    """Require the user to affirm the Terms of Use before the download flow starts."""
+    terms_url = f"{site}/terms-of-use.html"
+    if agreed_via_flag:
+        print(f"      Terms of Use accepted via --agree-terms ({terms_url}).")
+        return
+    print("      ------------------------------------------------------------------")
+    print("      This dataset is provided under the CPC-Bench Terms of Use:")
+    print(f"        {terms_url}")
+    print("      Please review them before downloading.")
+    print("      ------------------------------------------------------------------")
+    try:
+        answer = input('      Type "agree" to confirm you have read and agree '
+                       'to the Terms of Use: ').strip().lower()
+    except EOFError:
+        sys.exit("\n      No interactive terminal available. Re-run with --agree-terms "
+                 "after reading the Terms of Use.")
+    if answer not in ("agree", "i agree", '"agree"'):
+        sys.exit("      Download cancelled: you must agree to the Terms of Use.")
 
 
 def fetch_postgres(args):
@@ -76,13 +100,15 @@ def fetch_postgres(args):
         print(f"        python {LOAD_SCRIPT}")
 
 
-def fetch_site(site, data_dir):
+def fetch_site(site, data_dir, agree_terms=False):
     site = site.rstrip("/")
     print(f"\n[2/2] Exemplar index: requesting access from {site} ...")
 
-    # 1. start a device-authorization flow
+    # 1. confirm the Terms of Use, then start a device-authorization flow
+    confirm_terms(site, agree_terms)
     try:
-        r = requests.post(f"{site}/api/device/start", timeout=30)
+        r = requests.post(f"{site}/api/device/start",
+                          json={"terms_accepted": True}, timeout=30)
         r.raise_for_status()
         start = r.json()
     except Exception as e:
@@ -156,7 +182,7 @@ def main():
     if not args.skip_postgres:
         fetch_postgres(args)
     if not args.skip_site:
-        fetch_site(args.site, args.data_dir)
+        fetch_site(args.site, args.data_dir, agree_terms=args.agree_terms)
     print("\nDone.")
 
 
