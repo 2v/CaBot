@@ -1,16 +1,19 @@
-# Core (text differential diagnosis)
-openai>=1.40
-requests
-pillow
+# --- Core: running CaBot (run_cabot.py, cabot_public_lib, fetch_data.py) ---
+openai>=1.40          # differential-diagnosis LLM, query embeddings, slideshow LLM, TTS
+requests>=2.25        # fetch_data.py device-authorization flow
+pillow>=9.0           # image handling (case figures, video frames)
+numpy>=1.21           # exemplar CPC retrieval (in-memory cosine search)
+pyarrow>=14.0         # read the exemplar parquet; load literature parquet -> Postgres
+psycopg2-binary>=2.9  # pgvector literature-search client
+huggingface_hub>=0.24 # download the literature index from HuggingFace
+tqdm>=4.62            # progress bars
 
-# Exemplar CPC retrieval (v1, v1.1) — needs the downloadable parquet index
-chromadb
-pyarrow
-tqdm
+# Also required for the literature search: PostgreSQL with the pgvector extension
+# (production: PostgreSQL 17.5 + pgvector 0.8.0). See the README for setup.
+# Video mode (--mode video/both) additionally needs these SYSTEM binaries on PATH:
+#   pdflatex (TeX Live / MacTeX with beamer), pdftoppm (poppler), ffmpeg + ffprobe.
 
-# Video slideshow generation (mode: video / both)
-# NOTE: also requires these SYSTEM binaries on PATH:
-#   - pdflatex (TeX Live / MacTeX, with the beamer class)
-#   - pdftoppm (poppler)
-#   - ffmpeg and ffprobe
-python-docx
+# --- Rebuilding the literature index from OpenAlex (tools/build_literature_index/01-03) ---
+tiktoken>=0.5         # token counting / head+tail truncation before embedding
+orjson>=3.6           # fast JSON parsing of the OpenAlex snapshot
+datasets>=2.14        # optional alternative to pyarrow for reading the published shards

@@ -35,6 +35,8 @@ from openai import OpenAI
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from cabot_public_lib.versions import get_version, VERSIONS, DEFAULT_VERSION
 from cabot_public_lib.cabot import CaBot, DEFAULT_CPC_INDEX, DEFAULT_NEJM_CPCS_PATH
+from cabot_public_lib.literature_store import LiteratureSearchStore, DEFAULT_PG_DSN
+from cabot_public_lib.cpc_presentation_store import CPCPresentationStore
 
 
 def parse_args():
@@ -60,11 +62,16 @@ def parse_args():
                    help="Parquet index of the 100 public CPCs for exemplar retrieval (v1, v1.1)")
     p.add_argument("--nejm-cpcs-path", default=DEFAULT_NEJM_CPCS_PATH,
                    help="Dir with case images for video generation (mode video/both)")
+    p.add_argument("--pg-dsn", default=None,
+                   help="libpq DSN for the local pgvector literature database "
+                        "(default: config.ini [main] PG_DSN / env PG_DSN / "
+                        f"'{DEFAULT_PG_DSN}'). Load it with "
+                        "tools/build_literature_index/04_load_postgres.py.")
     p.add_argument("--debug", action="store_true", help="Verbose model I/O")
     return p.parse_args()
 
 
-def load_keys(config_path):
+def load_keys(config_path, cli_pg_dsn=None):
     cfg = ConfigParser()
     if not os.path.exists(config_path):
         sys.exit(f"Error: config file '{config_path}' not found. Copy config.example.ini to "
@@ -76,10 +83,13 @@ def load_keys(config_path):
                 return cfg.get("main", n)
         return None
     api_key = get("OPENAI_API_KEY", "OPENAI_KEY_TB", "OPENAI_KEY")
-    clinictron = get("JWT_CLINICTRON")
     if not api_key:
         sys.exit("Error: OPENAI_API_KEY missing from [main] in config.ini")
-    return api_key, clinictron
+    # libpq DSN for the pgvector literature database: --pg-dsn, else [main] PG_DSN,
+    # else env PG_DSN, else the local default.
+    pg_dsn = (cli_pg_dsn or get("PG_DSN") or os.environ.get("PG_DSN", "").strip()
+              or DEFAULT_PG_DSN)
+    return api_key, pg_dsn
 
 
 def presentation_cfg_from_version(v):
@@ -99,7 +109,7 @@ def main():
     if not os.path.exists(args.case):
         sys.exit(f"Error: case file '{args.case}' not found")
 
-    api_key, clinictron = load_keys(args.config)
+    api_key, pg_dsn = load_keys(args.config, args.pg_dsn)
     v = get_version(args.version)
     if v.mode == "simple_qa" and args.mode == "video":
         sys.exit(f"Error: version '{v.name}' is a simple QA model and does not support video.")
@@ -110,15 +120,28 @@ def main():
 
     client = OpenAI(api_key=api_key)
 
+    def build_stores():
+        """Build CaBot's retrieval stores (both connect/load in their constructors):
+
+          - literature_store: connects to the local pgvector database (needed by every
+            version; load it once with tools/build_literature_index/04_load_postgres.py).
+          - cpc_store: exemplar CPC retrieval, only for versions that use it (v1, v1.1).
+
+        Video-only runs never reach here, so neither store is built for them.
+        """
+        literature_store = LiteratureSearchStore(client, pg_dsn=pg_dsn)
+        cpc_store = (CPCPresentationStore(client, cpc_index_path=args.cpc_index)
+                     if v.use_similar_cases else None)
+        return literature_store, cpc_store
+
     # ---- simple QA / literature-search line (vs1, vs1.1): text-only, no exemplars, no video ----
     if v.mode == "simple_qa":
         print(f"=== CaBot {v.name} ({v.line} line) — simple QA / literature search — commit {v.repo_commit} ===")
         print(v.description)
-        if not clinictron:
-            print("Warning: JWT_CLINICTRON not set — literature search will fail.")
+        literature_store, cpc_store = build_stores()
         cabot = CaBot(
-            client=client, version_config=v, key_clinictron=clinictron,
-            cpc_index_path=args.cpc_index, nejm_cpcs_path=args.nejm_cpcs_path,
+            client=client, version_config=v, literature_store=literature_store,
+            cpc_store=cpc_store, nejm_cpcs_path=args.nejm_cpcs_path,
         )
         print("\nAnswering question (literature-grounded)...")
         qa_result = cabot.run_simple_literature(
@@ -149,11 +172,10 @@ def main():
 
     # ---- text differential ----
     if args.mode in ("text", "both"):
-        if v.use_similar_cases and not clinictron:
-            print("Warning: JWT_CLINICTRON not set — literature search will fail.")
+        literature_store, cpc_store = build_stores()
         cabot = CaBot(
-            client=client, version_config=v, key_clinictron=clinictron,
-            cpc_index_path=args.cpc_index, nejm_cpcs_path=args.nejm_cpcs_path,
+            client=client, version_config=v, literature_store=literature_store,
+            cpc_store=cpc_store, nejm_cpcs_path=args.nejm_cpcs_path,
         )
         print("\nGenerating differential diagnosis...")
         ddx_result = cabot.run(

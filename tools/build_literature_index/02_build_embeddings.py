@@ -26,7 +26,7 @@ EMBEDDING DETAILS (must match the hosted index)
   document text title.lower() , or title.lower() + "\\n\\n" + abstract
                 (NO "query: " prefix -- that is only for search queries)
   truncation    head+tail to 7000 tokens
-See scripts/common.py for the exact helpers.
+See common.py (alongside this script) for the exact helpers.
 
 Usage:
     python 02_build_embeddings.py                       # full run
@@ -62,7 +62,7 @@ from common import (  # noqa: E402
 DEFAULT_INPUT = DATA_DIR / "journal_works.jsonl.gz"
 DEFAULT_OUTDIR = DATA_DIR / "parquet"
 
-# OpenAI/OpenRouter embeddings API request limits. We pack requests up to both bounds.
+# OpenAI embeddings API request limits. We pack requests up to both bounds.
 MAX_INPUTS_PER_REQUEST = 2000
 MAX_TOKENS_PER_REQUEST = 230_000
 THREADS = 16
@@ -70,7 +70,7 @@ THREADS = 16
 tokenizer = tiktoken.encoding_for_model(EMBED_MODEL)
 SCHEMA = parquet_schema()
 
-# Embedding client + model id are resolved in main() (OpenAI or OpenRouter).
+# Embedding client + model id are resolved in main().
 CLIENT = None
 MODEL_ID = None
 
@@ -182,8 +182,7 @@ def main():
 
     global CLIENT, MODEL_ID
     CLIENT, MODEL_ID = get_embedding_client()
-    print(f"Embedding via model id '{MODEL_ID}' "
-          f"({'OpenRouter' if 'openrouter' in str(CLIENT.base_url) else 'OpenAI'}).")
+    print(f"Embedding via OpenAI model id '{MODEL_ID}'.")
 
     # Resume: each completed shard holds exactly --shard-size works (except the
     # last). Count complete shards and skip that many input lines.
@@ -253,7 +252,8 @@ def main():
     print(f"\nDone. Embedded {total:,} works in {elapsed/60:.1f} min "
           f"-> {args.outdir} ({EMBED_MODEL}, {EMBED_DIM}-d float32)")
     print(f"Build timestamp: {datetime.now().isoformat(timespec='seconds')}")
-    print("Next: 03_upload_huggingface.py to publish, or 04_search.py to search locally.")
+    print("Next: 03_upload_huggingface.py to publish, or 04_load_postgres.py + "
+          "05_search.py to load + search locally.")
 
 
 if __name__ == "__main__":

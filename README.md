@@ -5,7 +5,12 @@ the style of the NEJM Clinicopathologic Conference and (2) an optional **video s
 presentation** that teaches the clinical reasoning.
 
 This repository is the clean, public release used in the paper. A single `--version` flag selects
-the exact model generation, and `--mode` selects what to generate.
+the exact model generation, and `--mode` selects what to generate. CaBot grounds its reasoning in a
+**self-hosted literature search** over 3.47M articles from 204 high-impact clinical journals, served
+from a local **PostgreSQL + pgvector** database that runs the *same SQL and the same IVFFlat index as
+the production CaBot API* (the embeddings are published on HuggingFace,
+[`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)). Everything runs on
+your machine; no external search API is required.
 
 ## Versions
 
@@ -20,7 +25,13 @@ the exact model generation, and `--mode` selects what to generate.
 The **simple line** (`vs1`, `vs1.1`) is not a differential generator: it answers a medical question
 grounded only in `literature_search` results (markdown footnote citations), with no CPC formatting and
 no exemplar retrieval — reproducing the configuration used for the QA & VQA benchmarks. It is text-only
-(`--mode video`/`both` are rejected) and needs no local data. The case file you pass holds the question.
+(`--mode video`/`both` are rejected). The case file you pass holds the question.
+
+**Literature-search scope by line.** The differential-diagnosis versions (`v1`, `v1.1`, `vr1`) search
+**only the abstract-bearing articles** (~1.5M of the 3.47M index) and return the top 5 papers with
+abstracts. The simple line (`vs1`, `vs1.1`) searches the full corpus with dual retrieval — top-5
+title-only results followed by top-5 with abstracts. This matches the production API's `needAbstract`
+behavior and is recorded per version as `lit_abstract_only` in `cabot_public_lib/versions.py`.
 
 Each version is pinned to the source commit it was derived from (see `cabot_public_lib/versions.py`),
 so its behavior can be cross-checked. All prompts are written out in full in
@@ -34,34 +45,66 @@ so its behavior can be cross-checked. All prompts are written out in full in
 
 ## Setup
 
-1. **Python deps**
+```bash
+# 1. Python deps in a virtualenv
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+# 2. API key — copy the template and fill it in
+cp config.example.ini config.ini   # set OPENAI_API_KEY in [main]
 
-2. **API keys** — copy the template and fill it in:
+# 3. PostgreSQL + pgvector for the literature search (production: PostgreSQL 17.5,
+#    pgvector 0.8.0). On Ubuntu:
+sudo apt install postgresql-17 postgresql-17-pgvector
+sudo -u postgres createdb cabot_search
+sudo -u postgres psql -d cabot_search -c "CREATE EXTENSION vector;"
+sudo -u postgres psql -d cabot_search -c "GRANT ALL ON SCHEMA public TO $USER;"
+#    (set PG_DSN in config.ini if these defaults don't fit — see config.example.ini)
 
-   ```bash
-   cp config.example.ini config.ini
-   # set OPENAI_API_KEY and JWT_CLINICTRON in [main]
-   ```
+# 4. Data — load the literature index into Postgres + pull the exemplar index
+python fetch_data.py
+```
 
-3. **System deps (only for `--mode video`/`both`)**: `pdflatex` (TeX Live/MacTeX with `beamer`),
-   `pdftoppm` (poppler), and `ffmpeg`.
+A single **`OPENAI_API_KEY`** in `config.ini` covers everything: the differential-diagnosis LLM, the
+literature-search query embeddings, and (for video) the slideshow LLM and text-to-speech.
 
-4. **Data (only for `v1`/`v1.1`)**: download the exemplar index
-   `cpc_presentation_index_100.parquet` from the project website (dataset download page, "CaBot
-   Exemplar Index" row) into `data/` (see `data/README.md`). `vr1` and `vs1`/`vs1.1` need no local
-   data. **Note:** the public exemplar index covers only the **100 public CPCs**, so retrieved
-   exemplars differ from the paper's full-corpus runs (see `data/README.md`).
+### Data
+
+`fetch_data.py` sets up both retrieval dependencies:
+
+- **Literature index → PostgreSQL + pgvector.** Downloads the index from HuggingFace
+  ([`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search), ~21 GB) and loads
+  it into your local database with the exact production schema and IVFFlat index (by running
+  `tools/build_literature_index/04_load_postgres.py`). Needed by every version. The full load is
+  ~3.47M rows plus an index build — **budget ~1 hour**; use `--max-rows 200000` for a quick subset.
+- **Exemplar index** (`cpc_presentation_index_100.parquet`, ~1.2 MB) from the CPC-Bench site, written
+  to `data/`. Needed only by `v1`/`v1.1` (exemplar retrieval). It is gated behind a free
+  registration, so `fetch_data.py` opens your browser once to approve the download — sign in, enter
+  the printed code, click Approve. Skip it with `--skip-site` if you only run `vr1`/`vs1`/`vs1.1`;
+  skip the database load with `--skip-postgres`.
+
+> **Hardware.** The literature index lives on disk in Postgres (~30 GB including the IVFFlat index),
+> so you do **not** need to hold the vectors in RAM. The IVFFlat build is the heavy step; it benefits
+> from `maintenance_work_mem` and parallel workers (`04_load_postgres.py --maintenance-work-mem 16GB
+> --parallel-workers 8` on a large box — these affect build *speed* only, not search behavior). For a
+> quick run on a small machine, `fetch_data.py --max-rows 200000` loads a subset (retrieval is then
+> drawn from that subset only).
+
+### System dependencies (only for `--mode video`/`both`)
+
+`pdflatex` (TeX Live/MacTeX with the `beamer` class), `pdftoppm` (poppler), and `ffmpeg`/`ffprobe`
+must be on your PATH.
 
 ## Usage
 
 ```bash
-# Newest model, differential only — the quickest thing to try (no video deps, no local data needed
-# if you use vr1; v1.1 needs the exemplar data)
+# Quickest smoke test: newest model, text only, no exemplar data needed (vr1).
+# (Load a literature subset first for speed: fetch_data.py --skip-site --max-rows 200000)
 python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text
+
+# Newest model, differential only (v1.1 needs the exemplar index from fetch_data.py)
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text
 
 # Newest model, full pipeline (differential + slideshow)
 python run_cabot.py --case examples/example_case.txt --output out/
@@ -101,8 +144,80 @@ Outputs are written to `out/<case-name>/`:
 --config            Path to config.ini (default: config.ini)
 --cpc-index         Parquet index for exemplar retrieval (default: data/cpc_presentation_index_100.parquet)
 --nejm-cpcs-path    Dir with case images for video generation (default: data/nejm_cpcs)
+--pg-dsn            libpq DSN for the pgvector literature DB (default: config.ini / env / local)
 --debug             Verbose model I/O
 ```
+
+## Exemplar data scope (v1 / v1.1)
+
+The public exemplar index, `data/cpc_presentation_index_100.parquet`, holds the **100 public CPCs**
+together with their precomputed presentation-of-case embeddings (`text-embedding-3-small`, 1536-d),
+titles, and differential diagnoses. Exemplar retrieval therefore searches only these 100 cases —
+unlike the paper's full-corpus retrieval — so the retrieved exemplars (and any resulting citations to
+them) differ from the original runs. `vr1`, `vs1`, and `vs1.1` use no exemplar data at all.
+
+## Literature search
+
+The `literature_search` tool runs against a local **PostgreSQL + pgvector** database — the same engine
+the production CaBot `/api/search` endpoint uses. The index covers 3,474,244 works from 204 high-impact
+clinical journals (2023 JIF ≥ 10), built from an OpenAlex snapshot and embedded with
+`text-embedding-3-small` (1536-d). Documents are embedded with no prefix; queries are embedded as
+`"query: " + text`. Similarity is cosine via pgvector's `<=>` operator over an **IVFFlat** index
+(`vector_cosine_ops`, `lists = 1732`), with `ivfflat.probes = 42` set per session and
+`score = 1 − (embedding <=> query)` — identical schema, SQL, and parameters to production, so results
+reproduce the live site's behavior. (IVFFlat is approximate and its build is randomized, so a freshly
+loaded index is a different *instance* of the same method; the top-5 can occasionally differ from the
+original server's specific index.)
+
+The published index ([`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search))
+was built in **early June 2025** from an OpenAlex snapshot dated **~2025-06-05**. The database is
+loaded from it once with `tools/build_literature_index/04_load_postgres.py` (invoked by
+`fetch_data.py`); `05_search.py` is a standalone search/verification CLI (its `--json` mode reproduces
+the exact CaBot `/api/search` response). To rebuild the index from a fresh OpenAlex pull — to refresh
+it with newly published papers, or for exact reproducibility — see
+[Rebuilding the literature index from OpenAlex](#rebuilding-the-literature-index-from-openalex) below.
+
+## Rebuilding the literature index from OpenAlex
+
+The published index was built in **early June 2025** from an OpenAlex `works` snapshot dated
+**~2025-06-05**. OpenAlex changes over time, so a rebuild from a newer snapshot yields a *similar but
+not byte-identical* corpus — use a ~2025-06-05 snapshot to reproduce the paper's index exactly, or a
+newer one to **refresh the index with recently published papers**. The full pipeline lives in
+`tools/build_literature_index/` (raw OpenAlex → journal subset → embeddings → published dataset →
+local Postgres). It uses the build dependencies already in `requirements.txt` (`tiktoken`, `orjson`,
+`datasets`) and your `OPENAI_API_KEY` (a full run is a few billion embedding tokens — check pricing
+first).
+
+```bash
+# 1. Download the OpenAlex works snapshot (free, no AWS account). Large (hundreds of GB);
+#    we only need the works/ tree. For the paper's exact corpus, use a ~2025-06-05 snapshot.
+aws s3 sync "s3://openalex/data/works" "openalex-snapshot/data/works" --no-sign-request
+
+# 2. Filter the snapshot to the 204 high-impact journals (2023 JIF >= 10)
+python tools/build_literature_index/01_filter_openalex.py \
+    --snapshot openalex-snapshot/data/works
+#   -> tools/build_literature_index/data/journal_works.jsonl.gz   (~3.5M works)
+
+# 3. Embed each work with text-embedding-3-small (1536-d) -> sharded parquet
+python tools/build_literature_index/02_build_embeddings.py
+#   -> tools/build_literature_index/data/parquet/part-00000.parquet, ...
+
+# 4. (optional) Publish the shards as your own HuggingFace dataset
+python tools/build_literature_index/03_upload_huggingface.py --repo-id <your-username>/cabot-search
+
+# 5. Load the shards into local PostgreSQL + pgvector
+#    (same schema + IVFFlat index, lists=1732, as production)
+python tools/build_literature_index/04_load_postgres.py \
+    --local tools/build_literature_index/data/parquet --drop
+
+# 6. Verify
+python tools/build_literature_index/05_search.py --query "GLP-1 cardiovascular outcomes"
+```
+
+For a fast end-to-end smoke test, add `--limit 100000` to step 2 and `--max-rows 100000` to step 5.
+Step 2 supports `--resume`; each script's `--help` / module docstring documents the rest (shard size,
+embedding batch size, index-build tuning). If you publish your own index, point CaBot at it by passing
+`--repo-id <your-username>/cabot-search` to `04_load_postgres.py` (and update the website download link).
 
 ## Layout
 
@@ -112,6 +227,9 @@ cabot_public_lib/
 ├── versions.py               # version registry + linking source commits
 ├── cabot.py                  # text differential engine
 ├── video.py                  # slideshow pipeline (LaTeX -> PDF -> images -> TTS -> mp4)
-└── cpc_presentation_store.py # exemplar CPC retrieval
+├── cpc_presentation_store.py # exemplar CPC retrieval (100 public CPCs, in-memory numpy)
+└── literature_store.py       # literature search (PostgreSQL + pgvector client)
 run_cabot.py                  # CLI
+fetch_data.py                 # loads the literature index into Postgres + pulls the exemplar index
+tools/build_literature_index/ # rebuild the index from OpenAlex; 04 loads Postgres, 05 searches
 ```

@@ -10,6 +10,12 @@ The simple line reproduces the "simple QA / literature search" configuration use
 NEJMBench QA & VQA benchmarks: no CPC formatting, no exemplar retrieval — just answer a question,
 grounded in the literature_search tool. These versions set mode="simple_qa".
 
+Literature-search scope differs by line (``lit_abstract_only``):
+  - DDx line (v1, v1.1, vr1): search ONLY abstract-bearing works (~1.5M of the 3.47M index)
+    and return the top-5 papers with abstracts.
+  - simple line (vs1, vs1.1): search the full corpus with dual retrieval — top-5 title-only
+    results followed by top-5 with abstracts.
+
 Each VersionConfig records the NEJMBench `repo_commit` that pins the exact behavior, so any
 version can be cross-checked against the source it was derived from. Run mode (text / video /
 both) is an orthogonal CLI flag, not a version property (the simple line is text-only).
@@ -33,6 +39,7 @@ class VersionConfig:
     reasoning_effort: Optional[str] # "low" | "high" | None  (o3 -> low, gpt-5* -> high)
     agent: bool                     # literature_search tool enabled
     lit_top_k: int                  # literature results kept per search
+    lit_abstract_only: bool         # literature_search restricted to abstract-bearing works
     year_min: int
     year_max: int
     max_iterations: int
@@ -74,6 +81,7 @@ VERSIONS = {
         agent=True,
         use_similar_cases=True,
         lit_top_k=5,
+        lit_abstract_only=True,   # DDx line: search only abstract-bearing works (~1.5M)
         ddx_prompt=P.V1_DDX_PROMPT,
         input_wrapper=None,
         year_min=2000,
@@ -99,6 +107,7 @@ VERSIONS = {
         agent=True,
         use_similar_cases=True,
         lit_top_k=5,
+        lit_abstract_only=True,   # DDx line: search only abstract-bearing works (~1.5M)
         ddx_prompt=P.V1_1_DDX_PROMPT,
         input_wrapper=None,
         year_min=2000,
@@ -125,6 +134,7 @@ VERSIONS = {
         agent=True,
         use_similar_cases=False,
         lit_top_k=5,
+        lit_abstract_only=True,   # DDx line: search only abstract-bearing works (~1.5M)
         ddx_prompt=P.VR1_DDX_PROMPT,
         input_wrapper=P.UDN_APPLICATION_WRAPPER,
         year_min=2000,
@@ -152,6 +162,7 @@ VERSIONS = {
         reasoning_effort="high",        # run_simple_literature used effort=high for o3/gpt-5
         agent=True,
         lit_top_k=5,
+        lit_abstract_only=False,  # simple line: dual retrieval (title-only + abstract results)
         year_min=2000,
         year_max=2024,
         max_iterations=5,               # benchmark used 5 iterations (max_tool_calls = 4)
@@ -169,6 +180,7 @@ VERSIONS = {
         reasoning_effort="high",
         agent=True,
         lit_top_k=5,
+        lit_abstract_only=False,  # simple line: dual retrieval (title-only + abstract results)
         year_min=2000,
         year_max=2025,
         max_iterations=5,

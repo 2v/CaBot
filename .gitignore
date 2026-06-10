@@ -2,5 +2,8 @@ config.ini
 __pycache__/
 *.pyc
 out/
+.venv/
 data/*.parquet
 data/nejm_cpcs/
+# literature-index build artifacts (OpenAlex dump + parquet shards)
+tools/build_literature_index/data/

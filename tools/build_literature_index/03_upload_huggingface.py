@@ -3,7 +3,7 @@
 03_upload_huggingface.py  --  Publish the parquet shards as a HuggingFace dataset.
 
 THIRD stage. Uploads the sharded float32 parquet produced by stage 2 to a
-HuggingFace dataset repo, so it can be downloaded with one line (see 04_search.py)
+HuggingFace dataset repo, so it can be downloaded with one line (see 04_load_postgres.py)
 and linked from a website. Uses the HF write token from config.ini ([main]
 HF_WRITE_TOKEN) or the HF_TOKEN env var.
 
@@ -53,8 +53,8 @@ Exact embedding-search index over 3,474,244 works from 204 high-impact clinical
 journals (2023 JIF >= 10), built from an OpenAlex snapshot (~June 2025) and
 embedded with OpenAI `{EMBED_MODEL}` at {EMBED_DIM} dimensions (float32).
 
-This is used for CaBot. The build and search code is in the `CaBot-Search/`
-folder of the source repository.
+This is used for CaBot. The build and search code is in
+`tools/build_literature_index/` of the CaBot source repository.
 
 ## Columns
 
@@ -82,8 +82,10 @@ from datasets import load_dataset
 ds = load_dataset("REPO_ID", split="train")   # streams the parquet shards
 ```
 
-Embed queries with a `"query: "` prefix and use cosine similarity (L2-normalize
-+ inner product) for exact search. See `04_search.py`.
+Embed queries with a `"query: "` prefix and use cosine similarity. To reproduce
+the production engine exactly, load the shards into PostgreSQL + pgvector with
+`04_load_postgres.py` (IVFFlat, lists=1732, probes=42) and search with
+`05_search.py`.
 """
 
 
@@ -135,7 +137,7 @@ def main():
     )
 
     print(f"\nDone. https://huggingface.co/datasets/{args.repo_id}")
-    print("Update 04_search.py / the website download link to point at this repo.")
+    print("Update 04_load_postgres.py / the website download link to point at this repo.")
 
 
 if __name__ == "__main__":

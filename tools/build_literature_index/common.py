@@ -1,5 +1,5 @@
 """
-Shared helpers for the CaBot-Search standalone pipeline.
+Shared helpers for the literature-index build pipeline.
 
 Everything here mirrors the logic used to build the production CaBot index, so
 that a third party can reproduce the *exact* embedding search engine locally.
@@ -16,29 +16,34 @@ import os
 EMBED_MODEL = "text-embedding-3-small"
 EMBED_DIM = 1536
 
-# Embeddings can be generated through OpenAI directly, or through OpenRouter
-# (an OpenAI-compatible gateway). OpenRouter routes to the same underlying model,
-# so the vectors are identical to OpenAI's (verified: cosine 1.0000 vs the hosted
-# index). See get_embedding_client() for provider selection.
-OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-OPENROUTER_MODEL = "openai/text-embedding-3-small"  # OpenRouter's id for the same model
-
 # Documents longer than this many tokens are truncated head+tail before embedding
 # (see build_document_text / truncate_tokens). 7000 was the production value.
 TRUNCATE_TOKENS = 7000
 
-# Repo root is one level up from this scripts/ directory.
-ROOT = Path(__file__).resolve().parent.parent
-JOURNALS_DIR = ROOT / "journals"
-DATA_DIR = ROOT / "data"
+# --- pgvector ANN configuration (must match the production server exactly) ----
+# Verified against the live production database (PostgreSQL 17.5, pgvector 0.8.0):
+#   CREATE INDEX vec_ann_idx ON works_vec
+#       USING ivfflat (embedding vector_cosine_ops) WITH (lists = 1732);
+#   SET ivfflat.probes = 42;   -- set by the API before every search
+# lists = sqrt(3M) ~= 1732; probes = sqrt(1732) ~= 42.
+IVFFLAT_LISTS = 1732
+IVFFLAT_PROBES = 42
+
+# This module lives at <repo>/tools/build_literature_index/common.py.
+# journals/ ships alongside it; build artifacts (data/) are written next to it
+# and gitignored; secrets come from the repo-root config.ini.
+PKG_DIR = Path(__file__).resolve().parent
+REPO_ROOT = PKG_DIR.parent.parent
+JOURNALS_DIR = PKG_DIR / "journals"
+DATA_DIR = PKG_DIR / "data"
 
 
 # --- Secrets -----------------------------------------------------------------
 def _read_config():
-    """Read the repo config.ini ([main] section). Looks in CaBot-Search/ first,
-    then the parent OOE repo root, so the same secrets file works everywhere."""
+    """Read the repo config.ini ([main] section). Looks next to these scripts
+    first, then the repo root, so the same secrets file works either way."""
     cfg = ConfigParser()
-    for candidate in (ROOT / "config.ini", ROOT.parent / "config.ini"):
+    for candidate in (PKG_DIR / "config.ini", REPO_ROOT / "config.ini"):
         if candidate.exists():
             cfg.read(candidate)
             break
@@ -55,41 +60,31 @@ def _cfg_get(cfg, *names):
 
 
 def get_embedding_client():
-    """Return (OpenAI-compatible client, model_id) for generating embeddings.
+    """Return (OpenAI client, model_id) for generating embeddings.
 
-    Works with either provider:
-      - OpenRouter: [main] OPENROUTER_KEY, or env OPENROUTER_API_KEY
-        -> model "openai/text-embedding-3-small"
-      - OpenAI:     [main] OPENAI_KEY, or env OPENAI_API_KEY
-        -> model "text-embedding-3-small"
-
-    Provider is chosen by [main] EMBED_PROVIDER / env EMBED_PROVIDER
-    ("openrouter" | "openai") if set; otherwise it auto-selects OpenRouter when an
-    OpenRouter key is present, else OpenAI. Both yield identical 1536-d vectors.
+    Reads the key from [main] OPENAI_API_KEY (or OPENAI_KEY) in config.ini, else
+    the OPENAI_API_KEY environment variable.
     """
     import openai
     cfg = _read_config()
-    or_key = _cfg_get(cfg, "OPENROUTER_KEY") or \
-        os.environ.get("OPENROUTER_API_KEY", "").strip() or None
-    oa_key = _cfg_get(cfg, "OPENAI_KEY") or \
+    oa_key = _cfg_get(cfg, "OPENAI_API_KEY", "OPENAI_KEY") or \
         os.environ.get("OPENAI_API_KEY", "").strip() or None
+    if not oa_key:
+        raise RuntimeError("No OpenAI key found (set [main] OPENAI_API_KEY in "
+                           "config.ini or env OPENAI_API_KEY).")
+    return openai.OpenAI(api_key=oa_key), EMBED_MODEL
 
-    provider = (_cfg_get(cfg, "EMBED_PROVIDER")
-                or os.environ.get("EMBED_PROVIDER", "").strip().lower() or None)
-    if provider is None:
-        provider = "openrouter" if or_key else "openai"
 
-    if provider == "openrouter":
-        if not or_key:
-            raise RuntimeError("EMBED_PROVIDER=openrouter but no OpenRouter key found "
-                               "(set [main] OPENROUTER_KEY or env OPENROUTER_API_KEY).")
-        return openai.OpenAI(api_key=or_key, base_url=OPENROUTER_BASE_URL), OPENROUTER_MODEL
-    if provider == "openai":
-        if not oa_key:
-            raise RuntimeError("EMBED_PROVIDER=openai but no OpenAI key found "
-                               "(set [main] OPENAI_KEY or env OPENAI_API_KEY).")
-        return openai.OpenAI(api_key=oa_key), EMBED_MODEL
-    raise RuntimeError(f"Unknown EMBED_PROVIDER={provider!r} (use 'openrouter' or 'openai').")
+def get_pg_dsn():
+    """libpq DSN for the local pgvector database (04_load_postgres / 05_search).
+
+    config.ini [main] PG_DSN, else env PG_DSN, else a local default. Any libpq
+    connection string works, e.g. "dbname=cabot_search user=me password=... port=5432".
+    """
+    cfg = _read_config()
+    return (_cfg_get(cfg, "PG_DSN")
+            or os.environ.get("PG_DSN", "").strip()
+            or "dbname=cabot_search host=localhost")
 
 
 def get_hf_token():

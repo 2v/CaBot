@@ -11,7 +11,6 @@ import os
 import json
 import base64
 
-import requests
 from PIL import Image
 
 from .versions import VersionConfig
@@ -64,38 +63,32 @@ def _reasoning_kwargs(base_model, effort):
 
 
 class CaBot:
-    def __init__(self, client, version_config: VersionConfig, key_clinictron,
-                 cpc_index_path=DEFAULT_CPC_INDEX, nejm_cpcs_path=DEFAULT_NEJM_CPCS_PATH):
+    def __init__(self, client, version_config: VersionConfig, literature_store, cpc_store=None,
+                 nejm_cpcs_path=DEFAULT_NEJM_CPCS_PATH):
         self.client = client
         self.cfg = version_config
         self.year_min = version_config.year_min
         self.year_max = version_config.year_max
         self.lit_top_k = version_config.lit_top_k
-        self.key_clinictron = key_clinictron
+        self.lit_abstract_only = version_config.lit_abstract_only
         self.nejm_cpcs_path = nejm_cpcs_path
 
-        self.vector_store = None
-        self.cpcs_data = []
-        self.ddx_by_id = {}
-        self.titles_by_id = {}
+        # Both retrieval stores are built by the caller (see run_cabot.build_stores) and
+        # injected fully loaded, so they load the same way and at the same point:
+        #   - literature_store: required — every version uses the literature_search tool.
+        #   - cpc_store: exemplar CPC retrieval, set only for versions that use it (v1, v1.1)
+        #     and None otherwise (vr1, vs*). It also supplies the exemplar titles / DDx text.
+        #     NOTE: it searches only the 100 public CPCs — unlike the original full-corpus retrieval.
+        if literature_store is None:
+            raise ValueError("literature_store is required: every CaBot version uses the "
+                             "literature_search tool. Build a LiteratureSearchStore and pass it in.")
+        self.literature_store = literature_store
+        self.cpc_store = cpc_store
 
-        # Exemplar retrieval is only loaded when the version uses it (v1, v1.1). vr1 / vs* skip it.
-        # The store is built from the downloadable 100-public-CPC parquet, which also supplies the
-        # differential-diagnosis text and titles (no separate cpcs_markdown_2.json needed).
-        # NOTE: this searches only the 100 public CPCs — unlike the original full-corpus retrieval.
-        if version_config.use_similar_cases:
-            from .cpc_presentation_store import CPCPresentationStore, load_index_parquet
-            print(f"Loading public CPC exemplar index ({cpc_index_path})...")
-            records = load_index_parquet(cpc_index_path)
-            self.vector_store = CPCPresentationStore(openai_client=client)
-            self.vector_store.build_from_records(records)
-
-            self.cpcs_data = records
-            for r in records:
-                case_id = r["id"]
-                self.titles_by_id[case_id] = r.get("title") or f"Case {case_id}"
-                self.ddx_by_id[case_id] = r.get("differential_diagnosis")
-            print(f"Loaded {len(records)} public CPC exemplars.")
+    @property
+    def cpcs_data(self):
+        """Raw exemplar records (titles / DDx / ids), or [] when exemplar retrieval is off."""
+        return self.cpc_store.records if self.cpc_store else []
 
     # ------------------------------------------------------------------ literature
     def literature_search(self, query, min_citations=100, year_from=None, year_to=None,
@@ -105,14 +98,10 @@ class CaBot:
         if year_to is None:
             year_to = self.year_max
 
-        headers = {"Authorization": f"Bearer {self.key_clinictron}"}
         try:
-            response = requests.get(
-                f"https://clinictron.com/api/search?q={query}&yearFrom={year_from}&yearTo={year_to}&citationsMin={min_citations}&citationsMax=&journals=&needAbstract={str(abstract_only).lower()}",
-                headers=headers,
-            )
-            response.raise_for_status()
-            result = response.json()
+            result = self.literature_store.search(
+                query, year_from=year_from, year_to=year_to,
+                citations_min=min_citations, need_abstract=abstract_only)
 
             if result and "results" in result:
                 filtered_results = []
@@ -134,26 +123,24 @@ class CaBot:
                     })
                 return {"query": query, "results": formatted_results, "total_results": len(result.get("results", []))}
             return {"query": query, "results": [], "total_results": 0, "message": "No results found"}
-        except requests.exceptions.RequestException as e:
-            return {"query": query, "error": f"API request failed: {str(e)}", "results": [], "total_results": 0}
         except Exception as e:
             return {"query": query, "error": f"Unexpected error: {str(e)}", "results": [], "total_results": 0}
 
     def get_similar_cases_with_metadata(self, case_text, top_k=3, exclude_id=None,
                                         year_min_override=None, year_max_override=None):
-        if self.vector_store is None:
+        if self.cpc_store is None:
             return "No similar cases provided for this analysis.", []
         try:
             search_year_min = year_min_override if year_min_override is not None else self.year_min
             search_year_max = year_max_override if year_max_override is not None else self.year_max
-            scores, ids, texts, metadata = self.vector_store.search_with_filters(
+            scores, ids, texts, metadata = self.cpc_store.search_with_filters(
                 query=case_text, year_min=search_year_min, year_max=search_year_max,
                 k=top_k, exclude_id=exclude_id)
 
             formatted_cases, cases_metadata = [], []
             for score, case_id, _text, _meta in zip(scores, ids, texts, metadata):
-                title = self.titles_by_id.get(case_id, f"Case {case_id}")
-                ddx = self.ddx_by_id.get(case_id, "Differential diagnosis not available")
+                title = self.cpc_store.titles_by_id.get(case_id, f"Case {case_id}")
+                ddx = self.cpc_store.ddx_by_id.get(case_id, "Differential diagnosis not available")
                 if ddx and ddx != "Differential diagnosis not available":
                     formatted_cases.append(
                         f"**{title}**\n\n## Presentation of Case\n[Presentation of Case omitted for brevity]\n\n{ddx}\n\n")
@@ -358,7 +345,8 @@ class CaBot:
                 if progress_queue:
                     progress_queue.put({"type": "progress", "iteration": iterations, "max_iterations": max_iterations,
                                         "status": f"Searching literature ({len(function_calls)} searches)...", "stage": "literature_search"})
-                function_outputs = self.invoke_functions_from_response(response, exclude_id=exclude_id)
+                function_outputs = self.invoke_functions_from_response(
+                    response, exclude_id=exclude_id, abstract_only=self.lit_abstract_only)
                 if debug:
                     for fo in function_outputs:
                         print(f"\n[TOOL RESULT]: {fo['output']}")
@@ -394,7 +382,7 @@ class CaBot:
 
     # ------------------------------------------------------------- simple QA / literature
     def run_simple_literature(self, question=None, messages=None, debug=True, base_model=None,
-                              max_iterations=None, abstract_only=False):
+                              max_iterations=None, abstract_only=None):
         """Simple QA / literature-search mode (mode="simple_qa"; vs1, vs1.1).
 
         Answers a medical question grounded only in literature_search results — no CPC
@@ -402,6 +390,8 @@ class CaBot:
         run_simple_literature as driven by the NEJMBench QA & VQA benchmarks.
         """
         cfg = self.cfg
+        if abstract_only is None:
+            abstract_only = self.lit_abstract_only
         base_model = base_model or cfg.base_model
         max_iterations = max_iterations if max_iterations is not None else cfg.max_iterations
         model_kwargs = _reasoning_kwargs(base_model, cfg.reasoning_effort)
