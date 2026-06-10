@@ -1,7 +1,7 @@
 <div align="center">
   <img src="assets/cabot_transparent_small.png" alt="CaBot" width="150">
   <h1>CaBot</h1>
-  <p><b>An AI discussant for clinical case conferences</b></p>
+  <p><b>An AI expert discussant for clinical case conferences</b></p>
   <p>
     <a href="https://cpcbench.com">cpcbench.com</a> ·
     <a href="https://huggingface.co/datasets/tbuckley/cabot-search">literature index</a> ·
@@ -9,22 +9,25 @@
   </p>
 </div>
 
-CaBot reads a clinical case presentation and produces (1) a written **differential diagnosis** in
-the style of the NEJM Clinicopathologic Conference and (2) an optional **video slideshow
-presentation** that teaches the clinical reasoning.
+Dr. CaBot is a multimodal, interactive **AI expert discussant**: presented with a clinical case, it
+responds with a written **differential diagnosis** in the style of the NEJM Clinicopathologic
+Conference, along with an optional **video presentation** that narrates the reasoning.
 
-This repository is the source code for CaBot. A single `--version` flag selects the model
-generation, and `--mode` selects what to generate. Everything runs on your machine: a **self-hosted
-literature search** over 3.47M articles from 204 high-impact clinical journals (PostgreSQL +
-pgvector; embeddings published on HuggingFace,
-[`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)) and a
-**self-hosted case search** over 100 public NEJM CPC cases. No external search API is required.
+This repository is the source code for CaBot. CaBot is an agentic system that equips a reasoning
+model (OpenAI o3 or GPT-5.4, selected with `--version`) with external tools: it retrieves two
+similar cases as exemplars of expert clinical reasoning, then iteratively searches the clinical
+literature to develop a differential diagnosis with citations (5 articles per query, ranked by
+semantic similarity). With `--mode video`/`both`, the differential becomes a complete slideshow —
+LLM-generated LaTeX Beamer slides paired with a slide-by-slide narration. Everything runs on your
+machine: a **self-hosted literature search** over 3.47M articles from 204 high-impact clinical
+journals (PostgreSQL + pgvector; embeddings published on HuggingFace,
+[`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)) and **self-hosted
+case retrieval** over 100 public NEJM CPC cases. No external search API is required.
 
-Note: exemplar retrieval draws on the 100 NEJM CPC cases of the public
-[CPC-Bench](https://cpcbench.com) dataset (a year-stratified sample over 2000–2025,
-`data/cpc_presentation_index_100.parquet`) rather than the study's full case corpus, which includes
-cases we cannot redistribute — so retrieved exemplars, and any citations to them, can differ from
-the original runs.
+> **Note:** the study's full exemplar corpus of over 6,000 clinical cases cannot be redistributed,
+> so exemplar retrieval in this release searches the 100-case public
+> [CPC-Bench](https://cpcbench.com) dataset (a year-stratified sample over 2000–2025) and can
+> surface different exemplars than the original runs.
 
 ## Contents
 
