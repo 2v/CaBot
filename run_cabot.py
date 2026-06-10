@@ -54,6 +54,11 @@ def parse_args():
                    help="What to generate")
     p.add_argument("--base-model", default=None,
                    help="Override the version's default base model (e.g. o3, gpt-5, gpt-5.4)")
+    p.add_argument("--max-iterations", type=int, default=None,
+                   help="Override the version's iteration budget (tool calls + responses). "
+                        "Versions whose prompt states the budget (v1.1, vr1, vs*) tell the "
+                        "model the new number; v1's prompt does not, so the run is simply "
+                        "cut off at the limit.")
     p.add_argument("--exclude-id", default=None,
                    help="Case ID or DOI to exclude from exemplar retrieval and literature citations "
                         "(e.g. when running a known NEJM case). Searched against the case database.")
@@ -148,6 +153,7 @@ def main():
         print("\nAnswering question (literature-grounded)...")
         qa_result = cabot.run_simple_literature(
             question=case_text, debug=args.debug, base_model=args.base_model,
+            max_iterations=args.max_iterations,
         )
         answer_text = qa_result.get("output", "")
         record = {
@@ -185,6 +191,7 @@ def main():
             images=[],
             debug=args.debug,
             base_model=args.base_model,
+            max_iterations=args.max_iterations,
             exclude_id=args.exclude_id,
             exclude_title=args.exclude_title,
         )

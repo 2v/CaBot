@@ -147,6 +147,9 @@ Outputs are written to `out/<case-name>/`:
 --version, -v       v1 | v1.1 | vr1 | vs1 | vs1.1   (default: v1.1)
 --mode, -m          text | video | both   (default: both)
 --base-model        Override the version's default base model (e.g. o3, gpt-5, gpt-5.4)
+--max-iterations    Override the version's iteration budget (tool calls + responses). v1.1/vr1/vs*
+                    state the budget in their prompt, so the model plans around the new number;
+                    v1's prompt does not, so the run is simply cut off at the limit.
 --exclude-id        Case ID to exclude from exemplar retrieval + literature citations
 --exclude-title     Case title to exclude (resolved to a case ID against the case database)
 --config            Path to config.ini (default: config.ini)

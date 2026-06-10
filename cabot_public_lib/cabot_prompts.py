@@ -9,7 +9,7 @@ Placeholders used by the text-DDx prompts (substituted by cabot.py):
   {year_max}                    -> the model's "current year"
   {similar_cases}               -> retrieved exemplar CPC differentials (v1, v1.1)
   {case}                        -> the case presentation text
-  {max_iterations}              -> agent iteration budget (vr1)
+  {max_iterations}              -> agent iteration budget (v1.1, vr1)
 Presentation prompts use {case} and {model_differential_diagnosis} (v1 only).
 """
 
@@ -124,6 +124,8 @@ Now that you've read the examples, please remember to try your best to respond i
 Your response should be well-sourced, so make sure you use the literature_search tool to support claims you make in your Differential Diagnosis. Your differential diagnosis should include anywhere from 5-15 sources to provide comprehensive evidence-based support for your clinical reasoning. Consider using different search parameters (citations, years) to find both high-impact recent papers and foundational literature.
 
 CRUCIAL: You should use the literature to help support your response, but you can only cite papers that have been returned by the literature_search tool. You must not cite any other paper, even if you believe you know an additional paper that would be helpful. If you are unable to find helpful ressearch using the literature_search tool, you must not cite anything at all. You must only reference specific facts, numbers, and findings that appear in the abstract provided by the literature_search tool. 
+
+IMPORTANT: You have a maximum of {max_iterations} iterations (tool calls + responses) to complete your analysis, with one iteration reserved for your final response. Plan your literature search strategy accordingly and ensure you provide a complete answer before exhausting your iterations. If you are approaching the limit, prioritize synthesizing your findings and providing your final response.
 
 FINAL RESPONSE FORMAT: When you have completed your research and are ready to provide your final differential diagnosis, you MUST format your response with the tag [Differential Diagnosis] followed by your complete and well-sourced differential diagnosis section in markdown format. The format must exactly match the examples provided above. Do not provide any final answer without this tag. 
 
