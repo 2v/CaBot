@@ -24,6 +24,8 @@ import numpy as np
 from tqdm import tqdm
 import pyarrow.parquet as pq
 
+from .openai_retry import call_with_retry
+
 EMBED_MODEL = "text-embedding-3-small"
 
 
@@ -64,7 +66,8 @@ class CPCPresentationStore:
         all_embeddings = []
         for i in tqdm(range(0, len(texts), batch_size), desc="Generating embeddings", disable=len(texts) <= batch_size):
             batch = texts[i:i + batch_size]
-            response = self.openai_client.embeddings.create(input=batch, model=EMBED_MODEL)
+            response = call_with_retry(self.openai_client.embeddings.create,
+                                       input=batch, model=EMBED_MODEL)
             all_embeddings.extend(d.embedding for d in response.data)
         return all_embeddings
 

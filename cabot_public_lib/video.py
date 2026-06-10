@@ -17,6 +17,11 @@ from PIL import Image
 import concurrent.futures
 import base64
 
+try:
+    from .openai_retry import call_with_retry
+except ImportError:          # also runnable as a plain script (see __main__ below)
+    from openai_retry import call_with_retry
+
 #sys.path.append(str(Path(__file__).parent.parent))
 sys.path.insert(0, os.getcwd())
 
@@ -980,7 +985,8 @@ def generate_video_for_case(
             if base_model == "o3":
                 model_kwargs = {"reasoning": {"effort": "high"}}
 
-            response = client.responses.create(
+            response = call_with_retry(
+                client.responses.create,
                 model=base_model,
                 #model="o4-mini",
                 input=messages,

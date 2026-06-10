@@ -13,6 +13,7 @@ import base64
 
 from PIL import Image
 
+from .openai_retry import call_with_retry
 from .versions import VersionConfig
 
 # Downloadable public exemplar index (100 public CPCs: presentation embeddings + differentials).
@@ -315,9 +316,11 @@ class CaBot:
                 print(f"\n{'='*80}\nITERATION {iterations}\n{'='*80}")
 
             if agent:
-                response = self.client.responses.create(model=base_model, input=conversation, tools=tools, **model_kwargs)
+                response = call_with_retry(self.client.responses.create,
+                                           model=base_model, input=conversation, tools=tools, **model_kwargs)
             else:
-                response = self.client.responses.create(model=base_model, input=conversation, **model_kwargs)
+                response = call_with_retry(self.client.responses.create,
+                                           model=base_model, input=conversation, **model_kwargs)
 
             total_tokens_used += response.usage.total_tokens
 
@@ -423,7 +426,8 @@ class CaBot:
             if debug:
                 print(f"\n{'='*80}\nITERATION {iterations}\n{'='*80}")
 
-            response = self.client.responses.create(model=base_model, input=conversation, tools=tools, **model_kwargs)
+            response = call_with_retry(self.client.responses.create,
+                                       model=base_model, input=conversation, tools=tools, **model_kwargs)
             total_tokens_used += response.usage.total_tokens
 
             reasoning = [rx.to_dict() for rx in response.output if rx.type == "reasoning"]

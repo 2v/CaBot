@@ -28,6 +28,8 @@ import sys
 import psycopg2
 import psycopg2.extras
 
+from .openai_retry import call_with_retry
+
 EMBED_MODEL = "text-embedding-3-small"
 EMBED_DIM = 1536
 DEFAULT_PG_DSN = "dbname=cabot_search host=localhost"
@@ -131,8 +133,8 @@ class LiteratureSearchStore:
     def _embed_query(self, query):
         """Embed a query as production does: 'query: ' prefix, 1536 dims. Returns the
         pgvector input string (JSON array, the same serialization the API sends)."""
-        resp = self.client.embeddings.create(
-            model=EMBED_MODEL, input="query: " + query, dimensions=EMBED_DIM)
+        resp = call_with_retry(self.client.embeddings.create,
+                               model=EMBED_MODEL, input="query: " + query, dimensions=EMBED_DIM)
         return json.dumps(resp.data[0].embedding, separators=(",", ":"))
 
     def _build_base_query(self, has_abstract, qvec, year_from, year_to,

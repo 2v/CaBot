@@ -123,7 +123,7 @@ python run_cabot.py --case examples/example_case.txt --output out/ --version v1 
 # Simple QA / literature-search mode (the case file holds the question; o3, as benchmarked)
 python run_cabot.py --case examples/example_question.txt --output out/ --version vs1
 
-# Reproduce the Nov 2025 Brigham video-only demo
+# Video-only demo
 python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode video --base-model gpt-5 --exclude-id NEJMcpc2412514
 
 # Run a KNOWN NEJM case while excluding it from exemplar retrieval and literature citations

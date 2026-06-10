@@ -18,7 +18,7 @@ Examples
   # rare-disease (UDN) model, text only (its canonical mode)
   python run_cabot.py --case examples/udn_example.txt --output out/ --version vr1 --mode text
 
-  # reproduce the Nov 2025 Brigham video-only run
+  # video only, overriding the version's default base model
   python run_cabot.py --case examples/example_case.txt --output out/ \
       --version v1.1 --mode video --base-model gpt-5 --exclude-id NEJMcpc2412514
 

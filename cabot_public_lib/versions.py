@@ -100,7 +100,7 @@ VERSIONS = {
         line="main",
         description="Newest main-line CaBot: missing information acknowledged up front in BOTH "
                     "the text differential and the slideshow. gpt-5.4, literature-grounded, "
-                    "exemplar-retrieval, missing-info presentation (Nov 2025 Brigham).",
+                    "exemplar-retrieval, missing-info presentation (Nov 2025).",
         repo_commit="c09c6952",  # presentation; text-DDx prompt is authored (see cabot_prompts)
         base_model="gpt-5.4",
         reasoning_effort="high",
