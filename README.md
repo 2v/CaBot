@@ -1,4 +1,13 @@
-# CaBot
+<div align="center">
+  <img src="assets/cabot_transparent_small.png" alt="CaBot" width="150">
+  <h1>CaBot</h1>
+  <p><b>An AI discussant for clinical case conferences</b></p>
+  <p>
+    <a href="https://cpcbench.com">cpcbench.com</a> ·
+    <a href="https://huggingface.co/datasets/tbuckley/cabot-search">literature index</a> ·
+    <a href="https://cpcbench.com/terms-of-use.html">terms of use</a>
+  </p>
+</div>
 
 CaBot reads a clinical case presentation and produces (1) a written **differential diagnosis** in
 the style of the NEJM Clinicopathologic Conference and (2) an optional **video slideshow
@@ -11,13 +20,27 @@ pgvector; embeddings published on HuggingFace,
 [`tbuckley/cabot-search`](https://huggingface.co/datasets/tbuckley/cabot-search)) and a
 **self-hosted case search** over 100 public NEJM CPC cases. No external search API is required.
 
-One difference from the study configuration: exemplar retrieval (`v1`/`v1.1`) draws on the **100
-NEJM CPC cases of the public CPC-Bench dataset** (a year-stratified sample over 2000–2025,
+Note: exemplar retrieval draws on the 100 NEJM CPC cases of the public
+[CPC-Bench](https://cpcbench.com) dataset (a year-stratified sample over 2000–2025,
 `data/cpc_presentation_index_100.parquet`) rather than the study's full case corpus, which includes
 cases we cannot redistribute — so retrieved exemplars, and any citations to them, can differ from
 the original runs.
 
-## Setup
+## Contents
+
+- [Quick Start](#quick-start)
+- [Versions](#versions)
+- [Usage](#usage)
+- [Rebuilding the literature index from OpenAlex](#rebuilding-the-literature-index-from-openalex)
+- [Layout](#layout)
+
+## Quick Start
+
+**Requirements.** Python 3.10+ (developed on 3.12) and PostgreSQL 17 with the pgvector extension
+(installed in step 3 below). Linux and macOS are supported — the commands below are written for
+Ubuntu/Debian; on macOS install Postgres via Homebrew (`brew install postgresql@17 pgvector`). On
+Windows, use WSL2. Video generation (`--mode video`/`both`) additionally needs `pdflatex` (TeX
+Live/MacTeX with the `beamer` class), `pdftoppm` (poppler), and `ffmpeg`/`ffprobe` on your PATH.
 
 ```bash
 # 1. Python deps in a virtualenv
@@ -44,7 +67,8 @@ sudo -u postgres psql -d cabot_search -c "GRANT ALL ON SCHEMA public TO $USER;"
 #    If you hit "fe_sendauth: no password supplied", connect via the unix socket
 #    (peer auth, no password) instead:  export PG_DSN="dbname=cabot_search"
 
-# 4. Data — load the literature index into Postgres + pull the exemplar index.
+# 4. Data — load the literature index into Postgres + pull the exemplar index
+#    (a gated download from https://cpcbench.com; one-time browser approval).
 #    Optional: authenticate to HuggingFace for faster, non-rate-limited downloads
 #    (any read token from https://huggingface.co/settings/tokens):
 export HF_TOKEN=hf_...
@@ -59,13 +83,6 @@ python fetch_data.py
 python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text \
     --exclude-id NEJMcpc2412514
 ```
-
-
-
-### System dependencies (only for `--mode video`/`both`)
-
-`pdflatex` (TeX Live/MacTeX with the `beamer` class), `pdftoppm` (poppler), and `ffmpeg`/`ffprobe`
-must be on your PATH.
 
 ## Versions
 
