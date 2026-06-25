@@ -39,6 +39,10 @@ DEFAULT_SITE = "https://cpcbench.com"
 DATASET_FILE = "cpc_presentation_index_100.parquet"
 LOAD_SCRIPT = Path(__file__).resolve().parent / "tools" / "build_literature_index" / "04_load_postgres.py"
 
+# Private/gated full CPC exemplar index (the >6,000-case corpus CaBot v1 retrieved over).
+FULL_CPC_REPO = "tbuckley/cabot-cpc-index-full"
+FULL_CPC_FILE = "cpc_presentation_index_full.parquet"
+
 
 def parse_args():
     p = argparse.ArgumentParser(
@@ -54,6 +58,14 @@ def parse_args():
                         "searches just that subset)")
     p.add_argument("--skip-postgres", action="store_true", help="Skip the literature DB load")
     p.add_argument("--skip-site", action="store_true", help="Skip the CPC-Bench exemplar index")
+    p.add_argument("--full-cpc-index", action="store_true",
+                   help="Also pull the PRIVATE full CPC exemplar index from HuggingFace "
+                        f"({FULL_CPC_REPO}). Requires an HF token with access (config.ini "
+                        "[main] HF_WRITE_TOKEN, env HF_TOKEN, or `huggingface-cli login`). "
+                        "When present, CaBot-Public uses it automatically for v1 / v1.1 "
+                        "exemplar retrieval; otherwise it falls back to the 100 public CPCs.")
+    p.add_argument("--full-cpc-repo", default=FULL_CPC_REPO,
+                   help="HuggingFace dataset repo for the full CPC index")
     p.add_argument("--agree-terms", action="store_true",
                    help="Affirm that you have read and agree to the CPC-Bench Terms of Use "
                         "(skips the interactive prompt; for non-interactive runs)")
@@ -176,14 +188,63 @@ def fetch_site(site, data_dir, agree_terms=False):
     print(f"      Exemplar index saved to: {dest}")
 
 
+def _optional_hf_token():
+    """Best-effort HF token for the private index: config.ini / env, else None
+    (snapshot_download also honors a prior `huggingface-cli login`)."""
+    try:
+        sys.path.insert(0, str(LOAD_SCRIPT.parent))
+        from common import get_hf_token
+        return get_hf_token()
+    except Exception:
+        return None
+
+
+def fetch_full_cpc_index(repo_id, data_dir):
+    """Pull the private full CPC exemplar index from HuggingFace into data/.
+
+    Optional and gated: needs an HF token with access to the repo. On any failure
+    (no token / no access / offline) it prints how to authenticate and returns
+    without error, so CaBot-Public falls back to the 100 public CPCs.
+    """
+    print(f"\n[full] Private full CPC exemplar index <- HuggingFace ({repo_id})")
+    try:
+        from huggingface_hub import snapshot_download
+    except Exception:
+        print("      huggingface_hub not installed; skipping. `pip install huggingface_hub`.")
+        return
+    token = _optional_hf_token()
+    try:
+        path = snapshot_download(repo_id=repo_id, repo_type="dataset",
+                                 allow_patterns=[FULL_CPC_FILE], token=token)
+    except Exception as e:
+        print(f"      Could not download the full CPC index: {e}")
+        print("      This dataset is private — authenticate with an account that has access:")
+        print("        set [main] HF_WRITE_TOKEN in config.ini, export HF_TOKEN, or run")
+        print("        `huggingface-cli login`. CaBot-Public will use the 100 public CPCs "
+              "until then.")
+        return
+    src = Path(path) / FULL_CPC_FILE
+    data_dir = Path(data_dir)
+    data_dir.mkdir(parents=True, exist_ok=True)
+    dest = data_dir / FULL_CPC_FILE
+    # Copy out of the HF cache so run_cabot finds it at the default data/ path.
+    import shutil
+    shutil.copyfile(src, dest)
+    size_mb = dest.stat().st_size / 1e6
+    print(f"      Full CPC index saved to: {dest} ({size_mb:.1f} MB)")
+    print("      v1 / v1.1 will now retrieve exemplars over the full corpus automatically.")
+
+
 def main():
     args = parse_args()
-    if args.skip_postgres and args.skip_site:
+    if args.skip_postgres and args.skip_site and not args.full_cpc_index:
         sys.exit("Nothing to do: both --skip-postgres and --skip-site were given.")
     if not args.skip_postgres:
         fetch_postgres(args)
     if not args.skip_site:
         fetch_site(args.site, args.data_dir, agree_terms=args.agree_terms)
+    if args.full_cpc_index:
+        fetch_full_cpc_index(args.full_cpc_repo, args.data_dir)
     print("\nDone.")
 
 

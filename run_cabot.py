@@ -36,7 +36,7 @@ from openai import OpenAI
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from cabot_public_lib.versions import get_version, VERSIONS, DEFAULT_VERSION
-from cabot_public_lib.cabot import CaBot, DEFAULT_CPC_INDEX, DEFAULT_NEJM_CPCS_PATH
+from cabot_public_lib.cabot import CaBot, DEFAULT_NEJM_CPCS_PATH, resolve_cpc_index
 from cabot_public_lib.literature_store import LiteratureSearchStore, DEFAULT_PG_DSN
 from cabot_public_lib.cpc_presentation_store import CPCPresentationStore
 
@@ -65,8 +65,18 @@ def parse_args():
     p.add_argument("--exclude-title", default=None,
                    help="Case title to exclude; resolved to a case ID against the case database.")
     p.add_argument("--config", default="config.ini", help="Path to config.ini with API keys")
-    p.add_argument("--cpc-index", default=DEFAULT_CPC_INDEX,
-                   help="Parquet index of the 100 public CPCs for exemplar retrieval (v1, v1.1)")
+    p.add_argument("--cpc-index", default=None,
+                   help="Explicit parquet index for exemplar retrieval (v1, v1.1). Overrides "
+                        "--cpc-index-set; default: resolved by --cpc-index-set.")
+    p.add_argument("--cpc-index-set", choices=["auto", "full", "public"], default="auto",
+                   help="Which exemplar index to use: 'public' (100 public CPCs), 'full' (the "
+                        "private >6,000-case corpus v1 used, if pulled via fetch_data.py "
+                        "--full-cpc-index), or 'auto' (prefer full when present, else public).")
+    p.add_argument("--year-anchor", type=int, default=None,
+                   help="Anchor year for exemplar retrieval: exemplars are restricted to "
+                        "anchor-2 .. anchor+2 (exactly as v1 ran). Default: the version's anchor "
+                        "(2022 for v1/v1.1). For a faithful run of a known dated case against the "
+                        "full corpus, pass the case's publication year (e.g. --year-anchor 2025).")
     p.add_argument("--nejm-cpcs-path", default=DEFAULT_NEJM_CPCS_PATH,
                    help="Dir with case images for video generation (mode video/both)")
     p.add_argument("--pg-dsn", default=None,
@@ -127,6 +137,13 @@ def main():
 
     client = OpenAI(api_key=api_key)
 
+    # Resolve which exemplar index this run will use (only matters for v1 / v1.1).
+    cpc_index_path, cpc_index_which = resolve_cpc_index(args.cpc_index, args.cpc_index_set)
+    if v.use_similar_cases:
+        label = {"explicit": "explicit", "full": "FULL private corpus",
+                 "public": "100 public CPCs"}[cpc_index_which]
+        print(f"Exemplar index: {cpc_index_path}  [{label}]")
+
     def build_stores():
         """Build CaBot's retrieval stores (both connect/load in their constructors):
 
@@ -137,7 +154,7 @@ def main():
         Video-only runs never reach here, so neither store is built for them.
         """
         literature_store = LiteratureSearchStore(client, pg_dsn=pg_dsn)
-        cpc_store = (CPCPresentationStore(client, cpc_index_path=args.cpc_index)
+        cpc_store = (CPCPresentationStore(client, cpc_index_path=cpc_index_path)
                      if v.use_similar_cases else None)
         return literature_store, cpc_store
 
@@ -194,6 +211,7 @@ def main():
             max_iterations=args.max_iterations,
             exclude_id=args.exclude_id,
             exclude_title=args.exclude_title,
+            year_anchor=args.year_anchor,
         )
         ddx_text = ddx_result.get("output", "")
 
@@ -205,6 +223,8 @@ def main():
             "mode": args.mode,
             "exclude_id": args.exclude_id,
             "exclude_title": args.exclude_title,
+            "year_anchor": args.year_anchor if args.year_anchor is not None else v.year_anchor,
+            "cpc_index": cpc_index_path if v.use_similar_cases else None,
             "presentation_of_case": case_text,
             "cabot_prediction": ddx_result,
             "prediction_timestamp": datetime.now().isoformat(),

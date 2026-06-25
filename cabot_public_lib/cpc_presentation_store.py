@@ -1,13 +1,16 @@
 """
 Presentation-of-case exemplar store for CaBot-Public.
 
-This is the PUBLIC-release store: it is built from a single downloadable parquet
-(``cpc_presentation_index_100.parquet``) that holds the 100 public CPCs together with their
-precomputed presentation-of-case embeddings. The 100 vectors live in memory as a small numpy
-matrix — there is nothing large to ship and no vector-database dependency.
+This store is built from a single parquet of precomputed presentation-of-case embeddings; the
+vectors live in memory as a numpy matrix — no vector-database dependency. It loads whichever
+parquet it is given, with the same schema either way:
 
-NOTE: exemplar retrieval here searches ONLY the 100 public CPCs. The original CaBot retrieved over
-the full (private) CPC corpus, so retrieved exemplars will differ from the paper's runs.
+  * ``cpc_presentation_index_100.parquet`` — the 100 public CPCs shipped with this release, OR
+  * ``cpc_presentation_index_full.parquet`` — the private full >6,000-case corpus CaBot v1
+    actually retrieved over (pulled via ``fetch_data.py --full-cpc-index`` when authenticated).
+
+NOTE: with the public 100-case index, retrieved exemplars differ from the paper's runs because the
+original CaBot retrieved over the full (private) CPC corpus; loading the full index reproduces that.
 
 The query path embeds the search text with ``text-embedding-3-small`` — the same model used to build
 the index — so the stored and query vectors are comparable. Similarity is cosine: vectors are
@@ -100,7 +103,7 @@ class CPCPresentationStore:
         self._years = np.array([y if y is not None else 0 for y in years], dtype=np.int64)
         self.records = records
         if self.verbose:
-            print(f"Loaded {len(records)} public CPC exemplars.", file=sys.stderr, flush=True)
+            print(f"Loaded {len(records)} CPC exemplars.", file=sys.stderr, flush=True)
         return self
 
     def build_from_parquet(self, parquet_path):

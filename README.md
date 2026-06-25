@@ -81,6 +81,12 @@ python fetch_data.py
 #    The full load is ~3.47M rows + an index build (budget ~1 hour). For quick
 #    testing, add --max-rows 200000 to load a subset (retrieval then searches
 #    just that subset; re-run without the flag later to load the rest).
+#
+#    Optional: pull the PRIVATE full CPC exemplar corpus (the >6,000 cases v1
+#    retrieved over) so v1 / v1.1 reproduce the paper's full-corpus retrieval.
+#    Gated — needs an HF token on an account with access; without it, exemplar
+#    retrieval falls back to the 100 public CPCs.
+python fetch_data.py --skip-postgres --skip-site --full-cpc-index
 
 # 5. Run an example case through CaBot (v1.1 = newest main-line version). The example is
 #    NEJM Case 5-2025 (NEJMcpc2412514), one of the 100 public CPC exemplars — --exclude-id
@@ -97,13 +103,23 @@ sudo apt install texlive-latex-recommended texlive-latex-extra texlive-fonts-rec
 
 ## Versions
 
-| Version | Line | Base model | Grounding | Literature mode | Presentation | Notes |
-|---------|------|-----------|-----------|-----------------|--------------|-------|
-| `v1`    | main | o3        | literature + exemplar CPC retrieval | abstracts | standard | Model used in the physician A/B test |
-| `v1.1`  | main (**default**) | gpt-5.4 | literature + exemplar CPC retrieval | abstracts | acknowledges missing information | Newest main-line model |
-| `vr1`   | rare | gpt-5.4   | literature only (no exemplars) | abstracts | acknowledges missing information | Tuned for UDN rare-disease application letters; runs without local data |
-| `vs1`   | simple | o3      | literature only (no exemplars) | abstracts + titles | n/a (text only) | Simple QA / literature-search mode used for the NEJMBench QA & VQA benchmarks |
-| `vs1.1` | simple | gpt-5.4 | literature only (no exemplars) | abstracts + titles | n/a (text only) | Same as `vs1`, newer base model |
+| Version | Line | Base model | Grounding | Literature mode | Exemplar window (year-anchor ±2) | Presentation | Notes |
+|---------|------|-----------|-----------|-----------------|----------------------------------|--------------|-------|
+| `v1`    | main | o3        | literature + exemplar CPC retrieval | abstracts | 2022 → 2020–2024 | standard | Model used in the physician A/B test |
+| `v1.1`  | main (**default**) | gpt-5.4 | literature + exemplar CPC retrieval | abstracts | 2022 → 2020–2024 | acknowledges missing information | Newest main-line model |
+| `vr1`   | rare | gpt-5.4   | literature only (no exemplars) | abstracts | — (no exemplars) | acknowledges missing information | Tuned for UDN rare-disease application letters; runs without local data |
+| `vs1`   | simple | o3      | literature only (no exemplars) | abstracts + titles | — (no exemplars) | n/a (text only) | Simple QA / literature-search mode used for the NEJMBench QA & VQA benchmarks |
+| `vs1.1` | simple | gpt-5.4 | literature only (no exemplars) | abstracts + titles | — (no exemplars) | n/a (text only) | Same as `vs1`, newer base model |
+
+> **Exemplar window (v1 / v1.1).** Exemplar retrieval pulls the top-2 most similar CPCs from a
+> 5-year window centered on a **year-anchor** (`anchor−2 … anchor+2`). The anchor defaults to
+> **2022** (→ 2020–2024); override it per run with `--year-anchor`. The original v1 A/B run set the
+> anchor to *each case's own publication year*, so to reproduce a known dated case faithfully, pass
+> that year (e.g. `--year-anchor 2025`). The CPC exemplar corpus spans publication dates **through
+> 2024-05-30** (cases on/before the o3 pretraining cutoff), so retrieval windows are effectively
+> capped at that date. With the public 100-case index the window surfaces fewer / different
+> exemplars than the paper; pull the full >6,000-case corpus with `fetch_data.py --full-cpc-index`
+> (gated, requires HuggingFace access) to reproduce v1's full-corpus retrieval.
 
 
 ## Usage
@@ -159,7 +175,12 @@ Outputs are written to `out/<case-name>/`:
 --exclude-id        Case ID to exclude from exemplar retrieval + literature citations
 --exclude-title     Case title to exclude (resolved to a case ID against the case database)
 --config            Path to config.ini (default: config.ini)
---cpc-index         Parquet index for exemplar retrieval (default: data/cpc_presentation_index_100.parquet)
+--cpc-index         Explicit parquet index for exemplar retrieval (overrides --cpc-index-set)
+--cpc-index-set     auto | full | public  (default: auto — prefer the full private corpus when
+                    it has been pulled, else the 100 public CPCs)
+--year-anchor       Anchor year for exemplar retrieval (window = anchor-2 .. anchor+2). Default:
+                    the version's anchor (2022 for v1/v1.1). Pass a case's publication year to
+                    reproduce v1's per-case window against the full corpus.
 --nejm-cpcs-path    Dir with case images for video generation (default: data/nejm_cpcs)
 --pg-dsn            libpq DSN for the pgvector literature DB (default: config.ini / env / local)
 --debug             Verbose model I/O

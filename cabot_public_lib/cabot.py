@@ -10,6 +10,7 @@ from a `VersionConfig` (see versions.py).
 import os
 import json
 import base64
+from pathlib import Path
 
 from PIL import Image
 
@@ -18,7 +19,40 @@ from .versions import VersionConfig
 
 # Downloadable public exemplar index (100 public CPCs: presentation embeddings + differentials).
 DEFAULT_CPC_INDEX = "data/cpc_presentation_index_100.parquet"
+# Full (private) exemplar index — the >6,000-case corpus CaBot v1 actually retrieved over.
+# Pulled from a gated/private HuggingFace dataset by fetch_data.py --full-cpc-index; absent
+# unless you are authenticated and have access (see README). Same schema as the public index.
+DEFAULT_FULL_CPC_INDEX = "data/cpc_presentation_index_full.parquet"
 DEFAULT_NEJM_CPCS_PATH = "data/nejm_cpcs"
+
+
+def resolve_cpc_index(explicit=None, index_set="auto"):
+    """Pick the exemplar parquet to load for CPC retrieval.
+
+    An explicit path always wins. Otherwise ``index_set`` selects:
+      - "full":   the private full-corpus index (error if not downloaded).
+      - "public": the 100-case public index.
+      - "auto":   prefer the full index when present, else the public one — so an
+                  authenticated user who has pulled it reproduces v1's full-corpus
+                  retrieval automatically, while everyone else uses the 100 public CPCs.
+    Returns (path, which) where which is "explicit" | "full" | "public".
+    """
+    if explicit:
+        return explicit, "explicit"
+    full, public = Path(DEFAULT_FULL_CPC_INDEX), Path(DEFAULT_CPC_INDEX)
+    if index_set == "full":
+        if not full.exists():
+            raise SystemExit(
+                f"Full CPC index not found at {full}. Pull it with "
+                f"`python fetch_data.py --full-cpc-index` (requires HuggingFace access), "
+                f"or use --cpc-index-set public.")
+        return str(full), "full"
+    if index_set == "public":
+        return str(public), "public"
+    # auto
+    if full.exists():
+        return str(full), "full"
+    return str(public), "public"
 
 
 def encode_image(image_path):
@@ -79,7 +113,9 @@ class CaBot:
         #   - literature_store: required — every version uses the literature_search tool.
         #   - cpc_store: exemplar CPC retrieval, set only for versions that use it (v1, v1.1)
         #     and None otherwise (vr1, vs*). It also supplies the exemplar titles / DDx text.
-        #     NOTE: it searches only the 100 public CPCs — unlike the original full-corpus retrieval.
+        #     NOTE: by default it searches the 100 public CPCs; if the private full-corpus
+        #     index has been pulled (data/cpc_presentation_index_full.parquet) it searches the
+        #     full >6,000-case corpus the original runs used. See run_cabot --cpc-index-set.
         if literature_store is None:
             raise ValueError("literature_store is required: every CaBot version uses the "
                              "literature_search tool. Build a LiteratureSearchStore and pass it in.")
