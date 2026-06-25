@@ -7,3 +7,4 @@ data/*.parquet
 data/nejm_cpcs/
 # literature-index build artifacts (OpenAlex dump + parquet shards)
 tools/build_literature_index/data/
+lit_load.log
