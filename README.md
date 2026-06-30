@@ -88,11 +88,10 @@ python fetch_data.py
 #    retrieval falls back to the 100 public CPCs.
 python fetch_data.py --skip-postgres --skip-site --full-cpc-index
 
-# 5. Run an example case through CaBot (v1.1 = newest main-line version). The example is
-#    NEJM Case 5-2025 (NEJMcpc2412514), one of the 100 public CPC exemplars — --exclude-id
-#    keeps it out of its own exemplar retrieval and literature citations.
-python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text \
-    --exclude-id NEJMcpc2412514
+# 5. Run an example case through CaBot (v1.1 = newest main-line version). The bundled
+#    example is a short fictional teaching case (not from any case database), so no
+#    --exclude-id is needed.
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text
 
 # 6. (Optional) Video generation — only needed for --mode video/both. Installs pdflatex with
 #    the beamer class, pdftoppm (poppler), and ffmpeg/ffprobe. On Ubuntu/Debian:
@@ -125,28 +124,29 @@ sudo apt install texlive-latex-recommended texlive-latex-extra texlive-fonts-rec
 ## Usage
 
 ```bash
-# The bundled example case is NEJM Case 5-2025 (NEJMcpc2412514), one of the 100 public
-# CPC exemplars — every run below passes --exclude-id so the case is never retrieved as
-# its own exemplar and its source paper is never cited.
+# The bundled example case is a short fictional teaching case (not drawn from any case
+# database), so the runs below need no --exclude-id. When you run a real published case
+# that lives in the exemplar corpus, pass --exclude-id so it is never retrieved as its
+# own exemplar and its source paper is never cited (see the final example below).
 
 # Quickest way to try it: newest model, text only, no exemplar data needed (vr1).
 # (Load a literature subset first for speed: fetch_data.py --skip-site --max-rows 200000)
-python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text --exclude-id NEJMcpc2412514
+python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text
 
 # Newest model, differential only (v1.1 needs the exemplar index from fetch_data.py)
-python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text --exclude-id NEJMcpc2412514
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode text
 
 # Newest model, full pipeline (differential + slideshow)
-python run_cabot.py --case examples/example_case.txt --output out/ --exclude-id NEJMcpc2412514
+python run_cabot.py --case examples/example_case.txt --output out/
 
 # Original A/B-test model, text only
-python run_cabot.py --case examples/example_case.txt --output out/ --version v1 --mode text --exclude-id NEJMcpc2412514
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1 --mode text
 
 # Simple QA / literature-search mode (the case file holds the question; o3, as benchmarked)
 python run_cabot.py --case examples/example_question.txt --output out/ --version vs1
 
 # Video-only demo
-python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode video --base-model gpt-5 --exclude-id NEJMcpc2412514
+python run_cabot.py --case examples/example_case.txt --output out/ --version v1.1 --mode video --base-model gpt-5
 
 # Run a KNOWN NEJM case while excluding it from exemplar retrieval and literature citations
 python run_cabot.py --case case_4_2019.txt --output out/ --exclude-id NEJMcpc1810391

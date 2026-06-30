@@ -7,20 +7,19 @@ case presentation supplied as a plain-text file.
 
 Examples
 --------
-  # newest model, text + video (default). The bundled example is NEJM Case 5-2025
-  # (NEJMcpc2412514), one of the 100 public CPC exemplars — exclude it from retrieval:
-  python run_cabot.py --case examples/example_case.txt --output out/ --exclude-id NEJMcpc2412514
+  # newest model, text + video (default). The bundled example is a short fictional
+  # teaching case (not from any case database), so no --exclude-id is needed:
+  python run_cabot.py --case examples/example_case.txt --output out/
 
   # text only, original A/B-test model
-  python run_cabot.py --case examples/example_case.txt --output out/ --version v1 --mode text \
-      --exclude-id NEJMcpc2412514
+  python run_cabot.py --case examples/example_case.txt --output out/ --version v1 --mode text
 
   # rare-disease (UDN) model, text only (its canonical mode)
-  python run_cabot.py --case examples/udn_example.txt --output out/ --version vr1 --mode text
+  python run_cabot.py --case examples/example_case.txt --output out/ --version vr1 --mode text
 
   # video only, overriding the version's default base model
   python run_cabot.py --case examples/example_case.txt --output out/ \
-      --version v1.1 --mode video --base-model gpt-5 --exclude-id NEJMcpc2412514
+      --version v1.1 --mode video --base-model gpt-5
 
 See README.md for the full version / mode matrix and setup.
 """

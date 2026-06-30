@@ -5,6 +5,9 @@ out/
 .venv/
 data/*.parquet
 data/nejm_cpcs/
+data/udn/
+# private rare-disease case processing scripts + data (kept out of the public repo)
+private/
 # literature-index build artifacts (OpenAlex dump + parquet shards)
 tools/build_literature_index/data/
 lit_load.log
