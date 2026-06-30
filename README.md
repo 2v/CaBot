@@ -81,12 +81,6 @@ python fetch_data.py
 #    The full load is ~3.47M rows + an index build (budget ~1 hour). For quick
 #    testing, add --max-rows 200000 to load a subset (retrieval then searches
 #    just that subset; re-run without the flag later to load the rest).
-#
-#    Optional: pull the PRIVATE full CPC exemplar corpus (the >6,000 cases v1
-#    retrieved over) so v1 / v1.1 reproduce the paper's full-corpus retrieval.
-#    Gated — needs an HF token on an account with access; without it, exemplar
-#    retrieval falls back to the 100 public CPCs.
-python fetch_data.py --skip-postgres --skip-site --full-cpc-index
 
 # 5. Run an example case through CaBot (v1.1 = newest main-line version). The bundled
 #    example is a short fictional teaching case (not from any case database), so no
