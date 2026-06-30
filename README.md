@@ -3,11 +3,14 @@
   <h1>CaBot</h1>
   <p><b>An AI expert discussant for clinical case conferences</b></p>
   <p>
-    🌐 <a href="https://cpcbench.com">cpcbench.com</a> ·
-    🤗 <a href="https://huggingface.co/datasets/tbuckley/cabot-search">literature index</a> ·
+    <a href="https://cpcbench.com">cpcbench.com</a> ·
+    <a href="https://huggingface.co/datasets/tbuckley/cabot-search">literature index</a> ·
     <a href="https://cpcbench.com/ai-terms-of-use.html">terms of use</a>
   </p>
 </div>
+
+> **Terms of use:** by cloning, downloading, or otherwise using this repository, you agree to the
+> [terms of use](https://cpcbench.com/ai-terms-of-use.html).
 
 Dr. CaBot is a multimodal, interactive **AI expert discussant**: presented with a clinical case, it
 responds with a written **differential diagnosis** in the style of the NEJM Clinicopathologic
@@ -29,9 +32,6 @@ subset, and the tool can search all 3.47M (see *Literature mode* under [Versions
 > so exemplar retrieval in this release searches the 100-case public
 > [CPC-Bench](https://cpcbench.com) dataset (a year-stratified sample over 2000–2025) and can
 > surface different exemplars than the original runs.
-
-> **Terms of use:** by cloning, downloading, or otherwise using this repository, you agree to the
-> [terms of use](https://cpcbench.com/ai-terms-of-use.html).
 
 ## Contents
 
