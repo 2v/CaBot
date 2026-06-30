@@ -30,6 +30,9 @@ subset, and the tool can search all 3.47M (see *Literature mode* under [Versions
 > [CPC-Bench](https://cpcbench.com) dataset (a year-stratified sample over 2000–2025) and can
 > surface different exemplars than the original runs.
 
+> **Terms of use:** by cloning, downloading, or otherwise using this repository, you agree to the
+> [terms of use](https://cpcbench.com/ai-terms-of-use.html).
+
 ## Contents
 
 - [Quick Start](#quick-start)
