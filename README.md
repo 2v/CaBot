@@ -4,7 +4,8 @@
   <p><b>An AI expert discussant for clinical case conferences</b></p>
   <p>
     🌐 <a href="https://cpcbench.com">cpcbench.com</a> ·
-    🤗 <a href="https://huggingface.co/datasets/tbuckley/cabot-search">literature index</a>
+    🤗 <a href="https://huggingface.co/datasets/tbuckley/cabot-search">literature index</a> ·
+    <a href="https://cpcbench.com/ai-terms-of-use.html">terms of use</a>
   </p>
 </div>
 
